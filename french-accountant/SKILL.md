@@ -1,6 +1,7 @@
 ---
 name: french-accountant
-last_updated: 2026-02-05
+metadata:
+  last_updated: 2026-02-05
 description: |
   Expert-comptable IA pour les entreprises françaises. Co-pilote comptable et fiscal compliance-first.
 
@@ -27,7 +28,7 @@ Co-pilote comptable et fiscal pour entreprises françaises. Compliance-first.
 
 ## Fraîcheur des Données
 
-**Vérifier `last_updated` dans le frontmatter.**
+**Vérifier `metadata.last_updated` dans le frontmatter.**
 
 Si > 6 mois depuis la dernière mise à jour :
 

@@ -71,7 +71,7 @@ Pour les agents qui bossent dans [Claude Cowork](https://cowork.anthropic.com) :
 1. **Cloner le repo dans le workspace de l'agent**
    ```bash
    cd /chemin/vers/workspace/agent
-   git clone https://github.com/votre-username/paperasse.git
+   git clone https://github.com/romainsimon/paperasse.git
    ```
 
 2. **Ajouter au CLAUDE.md de l'agent**
@@ -170,7 +170,8 @@ Parce que recevoir une majoration de 10% pour retard, c'est con.
 Chaque skill a une date de dernière mise à jour dans son frontmatter :
 
 ```yaml
-last_updated: 2026-02-05
+metadata:
+  last_updated: 2026-02-05
 ```
 
 **Si le skill a plus de 6 mois**, l'agent affiche :
