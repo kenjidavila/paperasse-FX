@@ -30,13 +30,19 @@ Ce skill reproduit le travail d'un commissaire aux comptes (CAC) pour la validat
 
 Même sans obligation légale, cet audit apporte une assurance raisonnable sur la fiabilité des comptes.
 
-## Étape préalable : Collecter le contexte
+## Étape préalable : Collecter le contexte (OBLIGATOIRE)
 
-Avant de démarrer l'audit, obtenir et valider :
+**Ne jamais démarrer l'audit sans les informations minimales.** Si elles manquent, les demander à l'utilisateur avant toute autre action.
 
-1. **Identité de l'entreprise** : SIREN, forme juridique, régime d'imposition (IS/IR), régime TVA
-2. **Exercice audité** : date de début, date de fin, durée en jours
+Si un fichier `company.json` existe, le lire pour obtenir le contexte automatiquement.
+
+Informations requises :
+
+1. **Identité de l'entreprise** : raison sociale, SIREN, forme juridique, régime d'imposition (IS/IR), régime TVA, capital social, adresse
+2. **Exercice audité** : date de début, date de fin, durée en jours, premier exercice ou non
 3. **Documents disponibles** : FEC, bilan, compte de résultat, balance, grand livre, liasse fiscale, relevés bancaires, factures, PV d'assemblée, statuts
+
+**Si une information critique manque (SIREN, forme juridique, régime fiscal), la demander explicitement.** Ne pas faire de suppositions.
 
 ## Programme d'audit
 

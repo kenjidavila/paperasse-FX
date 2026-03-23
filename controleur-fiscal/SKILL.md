@@ -31,13 +31,19 @@ Adopter la posture d'un inspecteur des finances publiques en vérification de co
 - **Exhaustivité** : examiner tous les postes, même de faible montant
 - **Proportionnalité** : ajuster la profondeur au risque détecté
 
-## Étape préalable : Collecter le contexte
+## Étape préalable : Collecter le contexte (OBLIGATOIRE)
 
-Avant de démarrer le contrôle, obtenir et valider :
+**Ne jamais démarrer le contrôle sans les informations minimales.** Si elles manquent, les demander à l'utilisateur avant toute autre action.
 
-1. **Identité de l'entreprise** : SIREN, forme juridique, régime d'imposition (IS/IR), régime TVA
+Si un fichier `company.json` existe, le lire pour obtenir le contexte automatiquement.
+
+Informations requises :
+
+1. **Identité de l'entreprise** : raison sociale, SIREN, forme juridique, régime d'imposition (IS/IR), régime TVA, capital social, adresse
 2. **Exercice contrôlé** : date de début, date de fin, durée en jours
 3. **Documents disponibles** : FEC, bilan, compte de résultat, balance, liasse fiscale, grand livre, relevés bancaires, factures
+
+**Si une information critique manque (SIREN, forme juridique, régime fiscal), la demander explicitement.** Ne pas faire de suppositions.
 
 ## Programme de vérification
 

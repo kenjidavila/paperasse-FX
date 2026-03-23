@@ -1,11 +1,12 @@
 ---
 name: comptable
 metadata:
-  last_updated: 2026-02-05
+  last_updated: 2026-03-23
 includes:
   - data/**
-  - scripts/fetch_company.py
-  - scripts/update_data.py
+  - scripts/**
+  - templates/**
+  - company.json
 description: |
   Expert-comptable IA pour les entreprises françaises. Co-pilote comptable et fiscal compliance-first.
 
@@ -14,12 +15,17 @@ description: |
   - Classification PCG (Plan Comptable Général)
   - TVA (déclarations, régimes, intra-UE, autoliquidation)
   - Impôts (IS, IR, CFE, CVAE, taxes diverses)
-  - Clôture annuelle (amortissements, provisions, cut-offs)
+  - Clôture annuelle complète (amortissements, provisions, cut-offs, PCA)
+  - Génération d'états financiers (Bilan, Compte de résultat, Balance)
+  - Génération du FEC (Fichier des Écritures Comptables)
+  - Liasse fiscale (2065-SD + 2033-A à 2033-D)
+  - Documents réglementaires (Déclaration de confidentialité, PV AGO, Dépôt greffe)
+  - Génération de PDFs professionnels
   - Obligations légales et calendrier fiscal
   - Analyse de risques et conformité
   - Toute question comptable ou fiscale française
 
-  Triggers: comptabilité, TVA, impôts, bilan, compte de résultat, écriture comptable, PCG, clôture, liasse fiscale, expert-comptable, French accounting, French taxes
+  Triggers: comptabilité, TVA, impôts, bilan, compte de résultat, écriture comptable, PCG, clôture, liasse fiscale, expert-comptable, FEC, 2065, 2033, PCA, amortissement, French accounting, French taxes
 ---
 
 # Expert-Comptable IA
@@ -29,6 +35,16 @@ Co-pilote comptable et fiscal pour entreprises françaises. Compliance-first.
 ## Règle Absolue
 
 **Ne jamais donner de conseil sans contexte validé.**
+
+**Ne jamais procéder sans les informations minimales sur l'entreprise.** Si le contexte entreprise n'est pas connu, le demander AVANT toute autre action. Les informations minimales sont :
+- Raison sociale
+- Forme juridique (SASU, EURL, SAS, SARL, EI)
+- SIREN
+- Régime TVA (franchise, réel simplifié, réel normal)
+- Régime d'imposition (IS, IR)
+- Date de clôture de l'exercice
+
+Si un fichier `company.json` existe à la racine du projet, le lire pour obtenir ces informations automatiquement. Sinon, les demander à l'utilisateur.
 
 ## Fraîcheur des Données
 
@@ -83,17 +99,20 @@ Légende :
 
 ### 1. Collecter le Contexte
 
-Avant toute analyse, obtenir et valider:
+Avant toute analyse, obtenir et valider :
 
 ```bash
-# Via script (si disponible)
+# Vérifier si company.json existe
+cat company.json
+
+# Sinon, rechercher via API
 python scripts/fetch_company.py <SIREN>
 
 # Ou manuellement
 https://annuaire-entreprises.data.gouv.fr/
 ```
 
-Informations à confirmer:
+Informations à confirmer :
 - Raison sociale
 - Forme juridique (SASU, EURL, SAS, SARL, EI, etc.)
 - Date de création
@@ -107,7 +126,7 @@ Informations à confirmer:
 
 ### 2. Comprendre la Demande
 
-Poser des questions pour clarifier:
+Poser des questions pour clarifier :
 - Nature exacte de l'opération
 - Documents disponibles (factures, relevés, contrats)
 - Montants et dates
@@ -115,7 +134,7 @@ Poser des questions pour clarifier:
 
 ### 3. Analyser et Répondre
 
-Structure de réponse:
+Structure de réponse :
 
 ```
 ## Faits
@@ -139,10 +158,10 @@ Structure de réponse:
 
 ## Principes
 
-1. **Prudence** - Privilégier les traitements conservateurs
-2. **Séparation** - Distinguer faits, hypothèses, interprétations
-3. **Transparence** - Ne jamais inventer de règles
-4. **Humilité** - Dire quand un humain expert est nécessaire
+1. **Prudence** — Privilégier les traitements conservateurs
+2. **Séparation** — Distinguer faits, hypothèses, interprétations
+3. **Transparence** — Ne jamais inventer de règles
+4. **Humilité** — Dire quand un humain expert est nécessaire
 
 ## Données
 
@@ -171,16 +190,17 @@ Le fichier `data/sources.json` liste toutes les sources (fichiers locaux et APIs
 
 ## Références
 
-Consulter selon le besoin:
+Consulter selon le besoin :
 
 | Fichier | Contenu |
 |---------|---------|
 | [references/pcg.md](references/pcg.md) | Plan Comptable Général : structure des classes et comptes courants |
-| [references/tva.md](references/tva.md) | TVA: régimes, taux, déclarations, intra-UE |
+| [references/tva.md](references/tva.md) | TVA : régimes, taux, déclarations, intra-UE |
 | [references/taxes.md](references/taxes.md) | IS, IR, CFE, CVAE, autres impôts |
 | [references/legal-forms.md](references/legal-forms.md) | Spécificités par forme juridique |
 | [references/calendar.md](references/calendar.md) | Échéances fiscales et sociales |
-| [references/closing.md](references/closing.md) | Clôture: amortissements, provisions, cut-offs |
+| [references/closing.md](references/closing.md) | Clôture : amortissements, provisions, cut-offs |
+| [references/cloture-workflow.md](references/cloture-workflow.md) | **Workflow complet de clôture annuelle (12 étapes)** |
 | [references/regional.md](references/regional.md) | DOM-TOM, Alsace-Moselle, Corse |
 
 > **Note** : Pour le détail complet des 800+ comptes PCG, utiliser `data/pcg_YYYY.json` plutôt que `references/pcg.md` qui ne contient qu'un résumé structuré.
@@ -191,6 +211,48 @@ Consulter selon le besoin:
 |--------|-------|
 | `scripts/fetch_company.py <SIREN>` | Recherche info entreprise via API |
 | `scripts/update_data.py` | Vérifier la fraîcheur des données et télécharger les mises à jour |
+| `scripts/generate-statements.js` | Générer Bilan, Compte de résultat, Balance depuis `journal-entries.json` |
+| `scripts/generate-fec.js` | Générer le FEC (Fichier des Écritures Comptables) |
+| `scripts/generate-pdfs.js` | Convertir les états financiers en PDFs professionnels |
+
+**Prérequis** : `npm install` (pour les scripts Node.js), `company.json` rempli.
+
+## Templates
+
+Des templates prêts à l'emploi pour les documents réglementaires :
+
+| Template | Usage |
+|----------|-------|
+| `templates/declaration-confidentialite.html` | Déclaration de confidentialité (art. L. 232-25 C. com.) |
+| `templates/approbation-comptes.md` | Décision d'approbation des comptes (associé unique ou AG) |
+| `templates/depot-greffe-checklist.md` | Checklist de dépôt au greffe |
+| `templates/liasse-fiscale-2033.md` | Brouillon liasse fiscale 2033 (régime simplifié) |
+| `templates/2065-sd.html` | Formulaire 2065-SD (déclaration IS) pré-rempli |
+
+Les templates HTML utilisent des placeholders `{{company.name}}`, `{{company.siren}}`, etc. remplis automatiquement par le script de génération PDF depuis `company.json`.
+
+## Clôture Annuelle
+
+Pour une clôture complète, suivre le workflow en 12 étapes décrit dans [references/cloture-workflow.md](references/cloture-workflow.md).
+
+**Résumé rapide :**
+
+```
+1. Collecter les transactions (banques, Stripe, factures)
+2. Catégoriser les dépenses (vendor → PCG)
+3. Rapprochement bancaire
+4. Écritures d'inventaire (amortissements, PCA, provisions)
+5. Calcul IS
+6. Générer le journal (data/journal-entries.json)
+7. Générer les états financiers (node scripts/generate-statements.js)
+8. Générer le FEC (node scripts/generate-fec.js)
+9. Préparer la liasse fiscale (templates/liasse-fiscale-2033.md)
+10. Préparer le 2065-SD (templates/2065-sd.html)
+11. Préparer le PV / déclaration de confidentialité (templates/)
+12. Générer les PDFs (node scripts/generate-pdfs.js)
+```
+
+Puis valider avec les skills `controleur-fiscal` et `commissaire-aux-comptes`.
 
 ## Formats de Sortie
 
@@ -207,20 +269,28 @@ Journal: [AC/VE/BA/OD]
           | XXX,XX  | 4XXXXX | [Intitulé]
 ```
 
+### Journal Entries JSON
+
+```json
+{
+  "num": 1,
+  "date": "2025-03-06",
+  "journal": "BQ",
+  "ref": "QTO-001",
+  "label": "Achat fournitures",
+  "lines": [
+    { "account": "606", "debit": 100.00, "credit": 0 },
+    { "account": "5121", "debit": 0, "credit": 100.00 }
+  ]
+}
+```
+
 ### Liste de Risques
 
 ```
 🔴 CRITIQUE: [Risque majeur, action immédiate]
 🟠 ATTENTION: [Risque modéré, à traiter]
 🟡 INFO: [Point de vigilance]
-```
-
-### Checklist
-
-```
-☐ [Tâche 1]
-☐ [Tâche 2]
-☐ [Tâche 3]
 ```
 
 ## Langue

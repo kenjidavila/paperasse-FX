@@ -1,14 +1,31 @@
-# 📎 Paperasse
+<p align="center">
+  <img src="assets/banner.jpg" alt="Paperasse" width="100%">
+</p>
 
-**Des skills pour agents IA spécialisés dans la bureaucratie française.**
+<h1 align="center">Paperasse</h1>
 
-*Parce que quelqu'un devait le faire, et ce quelqu'un n'a pas besoin de pause café.*
+<p align="center">
+  <b>Des skills pour agents IA spécialisés dans la bureaucratie française.</b>
+</p>
+
+<p align="center">
+  <i>Parce que quelqu'un devait le faire, et ce quelqu'un n'a pas besoin de pause café.</i>
+</p>
+
+<p align="center">
+  <a href="https://github.com/romainsimon/paperasse/stargazers"><img src="https://img.shields.io/github/stars/romainsimon/paperasse?style=flat&color=blue" alt="GitHub stars"></a>
+  <a href="https://github.com/romainsimon/paperasse/blob/main/LICENSE"><img src="https://img.shields.io/github/license/romainsimon/paperasse?style=flat&color=blue" alt="License"></a>
+  <a href="https://github.com/romainsimon/paperasse/issues"><img src="https://img.shields.io/github/issues/romainsimon/paperasse?style=flat&color=blue" alt="Issues"></a>
+  <a href="https://github.com/romainsimon/paperasse"><img src="https://img.shields.io/github/last-commit/romainsimon/paperasse?style=flat&color=blue" alt="Last commit"></a>
+</p>
+
+<br />
 
 ---
 
-## 🤖 Qu'est-ce que c'est ?
+## Qu'est-ce que c'est ?
 
-Paperasse est une collection de skills pour agents IA ([Claude Code](https://claude.ai/claude-code), [Claude Cowork](https://cowork.anthropic.com), [Cursor](https://cursor.com), [Windsurf](https://windsurf.com), [Cline](https://cline.bot), [Aider](https://aider.chat)) spécialisés dans la comptabilité, la fiscalité et l'audit des entreprises françaises.
+Paperasse est une collection de skills pour agents IA ([Claude Code](https://claude.com/product/claude-code), [Claude Cowork](https://claude.com/product/cowork), [Codex](https://openai.com/codex/), [Cursor](https://cursor.com), [Windsurf](https://windsurf.com), [Cline](https://cline.bot), [Aider](https://aider.chat)) spécialisés dans la comptabilité, la fiscalité et l'audit des entreprises françaises.
 
 Chaque skill transforme votre agent en copilote expert d'un métier de la paperasse : il connaît les textes (CGI, BOFiP, NEP), les formulaires, les échéances, et surtout il ne se trompe pas de case dans la liasse fiscale.
 
@@ -16,26 +33,133 @@ Les skills sont du Markdown. Ils fonctionnent avec tout agent ou outil capable d
 
 ---
 
-## 📦 Skills Disponibles
+## Ce que Paperasse automatise (et ce qu'il ne fait pas)
 
-| Skill | Rôle | Fonctionnalités |
-|-------|------|-----------------|
-| [`comptable`](#-comptable--expert-comptable) | Expert-Comptable | Écritures, PCG, TVA, IS/IR, clôture, échéances fiscales |
-| [`controleur-fiscal`](#-controleur-fiscal--préparation-au-contrôle-fiscal) | Contrôleur Fiscal | Simulation de contrôle DGFIP, analyse FEC, chefs de redressement |
-| [`commissaire-aux-comptes`](#%EF%B8%8F-commissaire-aux-comptes--audit-des-comptes-annuels) | Commissaire aux Comptes | Audit NEP en 7 phases, validation bilan/CR/liasse, opinion |
+### Ce qui est automatisé
+
+| Étape | Outil | Détail |
+|-------|-------|--------|
+| Classification des dépenses | Skill `comptable` | Mappage vendor → compte PCG (800+ comptes) |
+| Écritures comptables | Skill `comptable` | Double entrée avec comptes, journaux, libellés |
+| Cut-off (PCA, CCA, CAP, PAR) | Skill `comptable` | Calcul prorata temporis, écritures de régularisation |
+| Amortissements | Skill `comptable` | Linéaire, dégressif, prorata première année |
+| Calcul IS | Skill `comptable` | Taux réduit PME (15%), taux normal (25%), prorata exercice court |
+| États financiers | Script `generate-statements.js` | Bilan, Compte de résultat, Balance depuis le journal |
+| FEC | Script `generate-fec.js` | Fichier légal 18 colonnes (art. L. 47 A-I LPF) |
+| PDFs professionnels | Script `generate-pdfs.js` | Tous documents avec en-tête société, pagination A4 |
+| Liasse fiscale (brouillon) | Template `liasse-fiscale-2033.md` | 2033-A à 2033-D pré-structurés |
+| Formulaire 2065-SD | Template `2065-sd.html` | Déclaration IS pré-remplie |
+| Déclaration de confidentialité | Template `declaration-confidentialite.html` | Art. L. 232-25 C. com. |
+| PV d'approbation des comptes | Template `approbation-comptes.md` | Décision de l'associé unique ou PV d'AG |
+| Checklist dépôt greffe | Template `depot-greffe-checklist.md` | Documents et délais |
+| Contrôle fiscal simulé | Skill `controleur-fiscal` | 8 axes de vérification DGFIP |
+| Audit CAC | Skill `commissaire-aux-comptes` | 7 phases NEP, opinion motivée |
+
+### Ce qui reste manuel
+
+| Étape | Pourquoi |
+|-------|----------|
+| Collecte des transactions | Chaque entreprise a ses propres banques et plateformes |
+| Signature des documents | Obligation légale (seul un humain peut signer) |
+| Dépôt sur Infogreffe / impots.gouv.fr | Authentification personnelle requise |
+| Télépaiement IS | Accès à l'espace professionnel impots.gouv.fr |
+| Validation finale des montants | Responsabilité de l'expert-comptable ou du dirigeant |
 
 ---
 
-### 🧮 `comptable` — Expert-Comptable
+## Workflow complet : de zéro à la clôture annuelle
+
+Voici comment utiliser les 3 skills ensemble pour gérer la comptabilité complète d'une entreprise française.
+
+### Phase 1 : Comptabilité courante (skill `comptable`)
+
+```
+> Voici mes transactions bancaires de janvier. Catégorise-les et génère les écritures.
+
+> Comment comptabiliser un abonnement Stripe en USD avec commission ?
+
+> Mon CA cumulé est de 32 000 EUR, suis-je proche du seuil TVA ?
+```
+
+Le skill `comptable` gère toute la comptabilité courante : écritures, PCG, TVA, calculs.
+
+### Phase 2 : Clôture annuelle (skill `comptable`)
+
+```
+> Fais la clôture annuelle de ma société. Exercice du 01/01/2025 au 31/12/2025.
+```
+
+Le skill suit le workflow en 12 étapes (voir `comptable/references/cloture-workflow.md`) :
+
+1. **Collecte** : Rassembler toutes les transactions de l'exercice
+2. **Catégorisation** : Mapper chaque dépense à un compte PCG
+3. **Rapprochement bancaire** : Vérifier solde comptable = solde réel
+4. **Amortissements** : Calculer les dotations (linéaire, prorata)
+5. **PCA** : Calculer les produits constatés d'avance (abonnements annuels SaaS)
+6. **Provisions** : Constater les risques et dépréciation
+7. **IS** : Calculer l'impôt sur les sociétés (15% PME / 25%)
+8. **Journal** : Consolider dans `data/journal-entries.json`
+9. **États financiers** : `node scripts/generate-statements.js`
+10. **FEC** : `node scripts/generate-fec.js`
+11. **Liasse fiscale** : Remplir les templates 2065 + 2033
+12. **PDFs** : `node scripts/generate-pdfs.js`
+
+### Phase 3 : Audit (skill `commissaire-aux-comptes`)
+
+```
+> Audite mes comptes annuels avant approbation.
+```
+
+Le skill CAC valide la clôture en 7 phases :
+- Vérification du FEC (format, équilibre, numérotation)
+- Contrôle du bilan et du compte de résultat
+- Réconciliation balance / grand livre
+- Validation de la liasse fiscale (2033-A = 2033-B = comptes)
+- Contrôles croisés et opinion (sans réserve / avec réserve / refus)
+
+### Phase 4 : Préparation au contrôle fiscal (skill `controleur-fiscal`)
+
+```
+> Simule un contrôle fiscal sur mon exercice 2025.
+```
+
+Le skill simule un inspecteur DGFIP sur 8 axes :
+- Conformité FEC (art. L. 47 A-I LPF)
+- Vérification IS (taux réduit, réintégrations)
+- Déductibilité des charges (art. 39 CGI)
+- Compte courant d'associé 455
+- Exhaustivité des revenus
+- TVA (franchise, seuils)
+- Immobilisations et amortissements
+- Opérations internationales
+
+Chaque anomalie = un **chef de redressement** avec base légale, montants et risque (élevé/moyen/faible).
+
+---
+
+## Skills disponibles
+
+| Skill | Rôle | Fonctionnalités |
+|-------|------|-----------------|
+| [`comptable`](#comptable--expert-comptable) | Expert-Comptable | Écritures, PCG, TVA, IS/IR, clôture complète, FEC, PDFs |
+| [`controleur-fiscal`](#contrôleur-fiscal--préparation-au-contrôle-fiscal) | Contrôleur Fiscal | Simulation de contrôle DGFIP, analyse FEC, chefs de redressement |
+| [`commissaire-aux-comptes`](#commissaire-aux-comptes--audit-des-comptes-annuels) | Commissaire aux Comptes | Audit NEP en 7 phases, validation bilan/CR/liasse, opinion |
+
+---
+
+### `comptable` — Expert-Comptable
 
 Copilote comptable et fiscal pour les entreprises françaises (SASU, EURL, SAS, SARL, EI).
 
 **Fonctionnalités :**
-- Écritures comptables avec les bons comptes PCG
-- Classification automatique dans le Plan Comptable Général (800+ comptes)
+- Écritures comptables avec les bons comptes PCG (800+ comptes)
 - Déclarations TVA (CA3, CA12, régimes, intra-UE, autoliquidation)
 - Calcul IS et IR (taux réduit PME, prorata exercice court)
-- Clôture annuelle (amortissements, provisions, CCA, cut-offs)
+- Clôture annuelle complète (12 étapes, voir workflow ci-dessus)
+- Cut-off : PCA, CCA, CAP, PAR avec calcul prorata temporis
+- Amortissements linéaires et dégressifs
+- Génération FEC, états financiers, PDFs
+- Templates liasse fiscale 2065+2033, PV, déclaration de confidentialité
 - Rappel des échéances fiscales via le calendrier officiel impots.gouv.fr
 - Recherche d'entreprise par SIREN via l'API Annuaire des Entreprises
 
@@ -43,7 +167,7 @@ Il ne signe pas la liasse fiscale. Pour ça, il vous faut encore un vrai expert-
 
 ---
 
-### 🔍 `controleur-fiscal` — Préparation au Contrôle Fiscal
+### `controleur-fiscal` — Préparation au Contrôle Fiscal
 
 Simule un contrôle fiscal tel que mené par un vérificateur de la DGFIP. L'objectif : **anticiper les risques de redressement avant que le vrai contrôleur ne les trouve**.
 
@@ -56,11 +180,9 @@ Simule un contrôle fiscal tel que mené par un vérificateur de la DGFIP. L'obj
 - Évaluation du risque par poste (élevé / moyen / faible)
 - Synthèse récapitulative avec total des droits rappelés
 
-Conçu pour les dirigeants et comptables qui veulent dormir tranquilles avant un contrôle. Et si un vrai inspecteur des finances publiques veut l'utiliser pour préparer ses vérifications, on est flattés. On espère juste que ce n'est pas les nôtres.
-
 ---
 
-### 🏛️ `commissaire-aux-comptes` — Audit des Comptes Annuels
+### `commissaire-aux-comptes` — Audit des Comptes Annuels
 
 Reproduit la démarche d'un commissaire aux comptes (CAC) pour valider les comptes annuels selon les normes NEP de la CNCC.
 
@@ -72,11 +194,81 @@ Reproduit la démarche d'un commissaire aux comptes (CAC) pour valider les compt
 - Calcul du seuil de signification (5% résultat courant ou 1-2% CA)
 - Émission d'une opinion motivée (sans réserve, avec réserve, refus, impossibilité)
 
-Utile avant l'AG d'approbation des comptes, même sans obligation légale de CAC.
+Utile avant l'approbation des comptes, même sans obligation légale de CAC.
 
 ---
 
-## 🚀 Installation
+## Scripts
+
+Des scripts Node.js pour automatiser la génération des documents comptables.
+
+### Installation
+
+```bash
+cd paperasse
+npm install
+```
+
+### Usage
+
+```bash
+# Prérequis : company.json rempli + data/journal-entries.json
+cp company.example.json company.json  # Puis remplir vos infos
+
+# Générer les états financiers (Bilan, Compte de résultat, Balance)
+node scripts/generate-statements.js
+
+# Générer le FEC
+node scripts/generate-fec.js
+
+# Générer les PDFs professionnels
+node scripts/generate-pdfs.js
+
+# Ou tout d'un coup
+npm run closing
+```
+
+### Format du journal
+
+Les scripts lisent `data/journal-entries.json`, un tableau d'écritures au format :
+
+```json
+[
+  {
+    "num": 1,
+    "date": "2025-03-06",
+    "journal": "BQ",
+    "ref": "QTO-001",
+    "label": "Achat fournitures Amazon",
+    "lines": [
+      { "account": "606", "debit": 45.99, "credit": 0 },
+      { "account": "5121", "debit": 0, "credit": 45.99 }
+    ]
+  }
+]
+```
+
+Ce fichier est généré par le skill `comptable` lors de la clôture. Il peut aussi être exporté depuis un logiciel comptable.
+
+---
+
+## Templates
+
+Des templates pré-remplis pour les documents réglementaires, dans le dossier `templates/` :
+
+| Template | Document | Format |
+|----------|----------|--------|
+| `declaration-confidentialite.html` | Déclaration de confidentialité des comptes annuels | HTML → PDF |
+| `2065-sd.html` | Formulaire 2065-SD (Déclaration IS) | HTML → PDF |
+| `approbation-comptes.md` | Décision de l'associé unique ou PV d'AG | Markdown |
+| `liasse-fiscale-2033.md` | Liasse fiscale 2033 (brouillon de travail) | Markdown |
+| `depot-greffe-checklist.md` | Checklist complète du dépôt au greffe | Markdown |
+
+Les templates HTML utilisent des placeholders (`{{company.name}}`, `{{company.siren}}`, etc.) remplis automatiquement depuis `company.json` par le script PDF.
+
+---
+
+## Installation
 
 ### Via [agentskill.sh](https://agentskill.sh) (recommandé)
 
@@ -104,7 +296,7 @@ done
 
 ### Claude Cowork
 
-Pour les agents qui bossent dans [Claude Cowork](https://cowork.anthropic.com) :
+Pour les agents qui travaillent dans [Claude Cowork](https://claude.com/product/cowork) :
 
 1. **Cloner le repo dans le workspace de l'agent**
    ```bash
@@ -122,12 +314,17 @@ Pour les agents qui bossent dans [Claude Cowork](https://cowork.anthropic.com) :
    - Charger `commissaire-aux-comptes/SKILL.md` pour auditer les comptes annuels.
    ```
 
-3. **Ou copier directement dans le projet**
-   ```bash
-   cp -r paperasse/comptable ./skills/
-   cp -r paperasse/controleur-fiscal ./skills/
-   cp -r paperasse/commissaire-aux-comptes ./skills/
-   ```
+### Codex (OpenAI)
+
+Codex peut lire des fichiers dans son environnement. Ajoutez les skills au repo et référencez-les dans les instructions :
+
+```bash
+# Ajouter les skills au projet
+cp -r comptable controleur-fiscal commissaire-aux-comptes ./
+
+# Dans les instructions de l'agent :
+# "Charger comptable/SKILL.md pour la comptabilité"
+```
 
 ### Autres Agents (Cursor, Windsurf, Cline, etc.)
 
@@ -155,7 +352,7 @@ cp -r comptable controleur-fiscal commissaire-aux-comptes .ai/skills/
 
 ---
 
-## 🎯 Utilisation
+## Utilisation
 
 Lancez votre agent et posez vos questions en français :
 
@@ -164,33 +361,43 @@ Lancez votre agent et posez vos questions en français :
 
 > C'est quoi le taux de TVA sur les formations en ligne ?
 
-> Simule un contrôle fiscal sur mes comptes 2025
+> Fais la clôture annuelle de ma société pour l'exercice 2025.
 
-> Audite mes comptes annuels avant l'AG d'approbation
+> Génère le FEC et les PDFs pour le dépôt au greffe.
 
-> Mon compte courant 455 est à 15 000€, c'est risqué ?
+> Simule un contrôle fiscal sur mes comptes 2025.
+
+> Audite mes comptes annuels avant approbation.
+
+> Mon compte courant 455 est à 15 000 EUR, c'est risqué ?
+
+> Prépare la liasse fiscale 2065 + 2033 pour mon exercice.
 ```
 
-Les skills commencent par chercher votre entreprise sur l'annuaire des entreprises (SIREN, forme juridique, régime), puis structurent leur réponse :
-- **Faits** : ce qui est certain et documenté
-- **Hypothèses** : ce qui est supposé, à confirmer
-- **Analyse** : traitement comptable et fiscal
-- **Risques** : points d'attention
-- **Actions** : tâches concrètes
+Les skills commencent par vérifier les informations sur votre entreprise (via `company.json` ou en posant des questions). Ils ne procèdent jamais sans contexte validé.
 
 ---
 
-## 🛡️ Garde-fous
+## Garde-fous
+
+### Vérification du contexte entreprise
+
+Chaque skill vérifie en premier lieu qu'il dispose des informations minimales sur l'entreprise :
+- Raison sociale, SIREN, forme juridique
+- Régime TVA et régime d'imposition
+- Dates de l'exercice
+
+Si un fichier `company.json` existe, il est lu automatiquement. Sinon, le skill demande les informations avant de procéder. Les documents générés s'adaptent à la forme juridique (président ou gérant, associé unique ou AG, etc.).
 
 ### Vérification des échéances
 
 À chaque conversation, le skill comptable consulte le calendrier fiscal officiel et affiche les prochaines échéances :
 
 ```
-⏰ PROCHAINES ÉCHÉANCES
+PROCHAINES ÉCHÉANCES
 ━━━━━━━━━━━━━━━━━━━━━━
-🔴 15/03 - Acompte IS n°1 (dans 5 jours)
-🟡 25/03 - TVA février CA3 (dans 15 jours)
+ 15/03 - Acompte IS n°1 (dans 5 jours)
+ 25/03 - TVA février CA3 (dans 15 jours)
 ```
 
 ### Fraîcheur des données
@@ -225,27 +432,22 @@ python3 scripts/update_data.py           # Vérifier et mettre à jour
 python3 scripts/update_data.py --force   # Forcer le re-téléchargement
 ```
 
-Le script vérifie :
-1. Les dates `last_updated` de chaque SKILL.md (alerte si > 6 mois)
-2. Les dates `last_fetched` de chaque source de données (alerte si obsolète)
-3. La disponibilité des sources distantes (APIs, repos GitHub)
-
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
 | Skill | Description | Statut |
 |-------|-------------|--------|
-| `comptable` | Expert-comptable | ✅ Done |
-| `controleur-fiscal` | Contrôle fiscal DGFIP | ✅ Done |
-| `commissaire-aux-comptes` | Commissaire aux comptes | ✅ Done |
-| `avocat` | Avocat d'affaires | 🔜 Bientôt |
-| `drh` | DRH / Ressources humaines | 🔜 Bientôt |
-| `notaire` | Notaire | 🤔 Un jour |
+| `comptable` | Expert-comptable + clôture complète | Done |
+| `controleur-fiscal` | Contrôle fiscal DGFIP | Done |
+| `commissaire-aux-comptes` | Commissaire aux comptes | Done |
+| `avocat` | Avocat d'affaires | Bientôt |
+| `drh` | DRH / Ressources humaines | Bientôt |
+| `notaire` | Notaire | Un jour |
 
 ---
 
-## ⚠️ Avertissement Légal
+## Avertissement légal
 
 *Ce projet est fourni "tel quel", sans garantie d'aucune sorte.*
 
@@ -255,7 +457,7 @@ Pour les situations complexes (litiges, montages fiscaux, contrôles en cours), 
 
 ---
 
-## 🤝 Contribuer
+## Contribuer
 
 Vous avez un métier de la paperasse que vous aimeriez voir automatisé ?
 
@@ -277,13 +479,13 @@ Noms de dossiers en français, en minuscules, avec tirets :
 
 ---
 
-## 📜 Licence
+## Licence
 
 MIT
 
 ---
 
-## 🙏 Remerciements
+## Remerciements
 
 - **L'administration française** — Pour avoir créé un système si complexe qu'il nécessite une IA pour le comprendre
 - **Le Plan Comptable Général** — 800 comptes, vraiment ?
@@ -294,11 +496,11 @@ MIT
 ---
 
 <p align="center">
-  <i>« La paperasse, c'est comme le cholestérol : y'en a du bon et du mauvais, mais surtout y'en a trop. »</i>
+  <i>La paperasse, c'est comme le cholestérol : y'en a du bon et du mauvais, mais surtout y'en a trop.</i>
   <br>
   — Personne de célèbre, jamais
 </p>
 
 ---
 
-**Made with 🥐 in France**
+**Made with croissants in France**

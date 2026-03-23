@@ -1,0 +1,16 @@
+{
+  "name": "paperasse",
+  "version": "1.0.0",
+  "description": "Skills et outils pour la comptabilité française",
+  "private": true,
+  "scripts": {
+    "fec": "node scripts/generate-fec.js",
+    "statements": "node scripts/generate-statements.js",
+    "pdfs": "node scripts/generate-pdfs.js",
+    "closing": "node scripts/generate-fec.js && node scripts/generate-statements.js && node scripts/generate-pdfs.js"
+  },
+  "dependencies": {
+    "marked": "^15.0.0",
+    "puppeteer": "^24.0.0"
+  }
+}
