@@ -1,6 +1,6 @@
 # 📎 Paperasse
 
-**Des skills Claude pour automatiser la bureaucratie française.**
+**Des skills pour agents IA spécialisés dans la bureaucratie française.**
 
 *Parce que quelqu'un devait le faire, et ce quelqu'un n'a pas besoin de pause café.*
 
@@ -8,11 +8,11 @@
 
 ## 🤖 Qu'est-ce que c'est ?
 
-Paperasse est une collection de skills pour [Claude Code](https://claude.ai/claude-code) spécialisés dans la comptabilité, la fiscalité et l'audit des entreprises françaises.
+Paperasse est une collection de skills pour agents IA ([Claude Code](https://claude.ai/claude-code), [Claude Cowork](https://cowork.anthropic.com), [Cursor](https://cursor.com), [Windsurf](https://windsurf.com), [Cline](https://cline.bot), [Aider](https://aider.chat)) spécialisés dans la comptabilité, la fiscalité et l'audit des entreprises françaises.
 
-Chaque skill transforme Claude en copilote expert d'un métier de la paperasse : il connaît les textes (CGI, BOFiP, NEP), les formulaires, les échéances, et surtout il ne se trompe pas de case dans la liasse fiscale.
+Chaque skill transforme votre agent en copilote expert d'un métier de la paperasse : il connaît les textes (CGI, BOFiP, NEP), les formulaires, les échéances, et surtout il ne se trompe pas de case dans la liasse fiscale.
 
-Les skills fonctionnent aussi avec Cursor, Windsurf, Cline, Aider, et tout outil capable de lire du Markdown.
+Les skills sont du Markdown. Ils fonctionnent avec tout agent ou outil capable de lire des fichiers.
 
 ---
 
@@ -78,6 +78,18 @@ Utile avant l'AG d'approbation des comptes, même sans obligation légale de CAC
 
 ## 🚀 Installation
 
+### Via [agentskill.sh](https://agentskill.sh) (recommandé)
+
+```bash
+# Installer le skill /learn (une seule fois)
+npx agentskill init
+
+# Puis dans votre agent :
+/learn @paperasse/comptable
+/learn @paperasse/controleur-fiscal
+/learn @paperasse/commissaire-aux-comptes
+```
+
 ### Claude Code (CLI)
 
 ```bash
@@ -88,8 +100,6 @@ cp -r comptable ~/.claude/skills/
 for skill in comptable controleur-fiscal commissaire-aux-comptes; do
   cp -r $skill ~/.claude/skills/
 done
-
-# C'est tout. Pas de dépendances. Juste des fichiers Markdown.
 ```
 
 ### Claude Cowork
@@ -147,7 +157,7 @@ cp -r comptable controleur-fiscal commissaire-aux-comptes .ai/skills/
 
 ## 🎯 Utilisation
 
-Lancez Claude Code et posez vos questions en français :
+Lancez votre agent et posez vos questions en français :
 
 ```
 > Comment je comptabilise un achat chez AWS ?
@@ -191,14 +201,21 @@ Le législateur français change les règles plus souvent que vous changez de mo
 
 ### Données open source (`data/`)
 
-Le repo embarque des jeux de données open source :
+Le repo embarque des jeux de données open source issus de [data.gouv.fr](https://www.data.gouv.fr) :
 
 | Fichier | Contenu | Source |
 |---------|---------|--------|
-| `data/pcg_YYYY.json` | Plan Comptable Général complet (800+ comptes et libellés) | [Arrhes/PCG](https://github.com/arrhes/PCG) via data.gouv.fr |
-| `data/nomenclature-liasse-fiscale.csv` | Clés/libellés des cases de la liasse fiscale | [data.gouv.fr](https://www.data.gouv.fr/datasets/nomenclature-fiscale-du-compte-de-resultat/) |
+| `data/pcg_YYYY.json` | Plan Comptable Général complet (800+ comptes et libellés) | [Arrhes/PCG](https://github.com/arrhes/PCG) via [data.gouv.fr](https://www.data.gouv.fr/datasets/plan-comptable-general/) |
+| `data/nomenclature-liasse-fiscale.csv` | Clés/libellés des cases de la liasse fiscale (2033, 2050) | [data.gouv.fr](https://www.data.gouv.fr/datasets/nomenclature-fiscale-du-compte-de-resultat/) |
 
-Les skills utilisent aussi des APIs publiques (BOFiP, Sirene) sans stocker de données localement. Tout est décrit dans `data/sources.json`.
+Les skills utilisent aussi des APIs publiques sans stocker de données localement :
+
+| API | Contenu | Source |
+|-----|---------|--------|
+| BOFiP Impôts | Doctrine fiscale officielle (publications en vigueur) | [data.gouv.fr](https://www.data.gouv.fr/datasets/bofip-impots-publications-en-vigueur/) |
+| Base Sirene | Annuaire des entreprises (SIREN, forme juridique, activité) | [data.gouv.fr](https://www.data.gouv.fr/datasets/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/) |
+
+Toutes les sources et leurs dates de dernière récupération sont décrites dans `data/sources.json`.
 
 **Vérifier la fraîcheur et mettre à jour :**
 
