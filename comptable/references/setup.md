@@ -8,12 +8,23 @@ Ce setup se lance uniquement si `company.json` n'existe pas à la racine du proj
 
 Demander :
 
-> Quel est le **nom de votre société** et son **numéro SIREN** ?
+> Quel est le **nom de votre société** ?
 
-Si SIREN fourni → lancer `python scripts/fetch_company.py <SIREN>` pour pré-remplir automatiquement (raison sociale, forme juridique, adresse, code NAF). Afficher et demander confirmation.
+Quelle que soit la réponse (nom seul, SIREN, ou les deux), lancer :
 
-Si pas de SIREN ou échec du script → demander manuellement :
+```bash
+python scripts/fetch_company.py "<nom ou SIREN>" --json
+```
+
+Le script interroge l'API `recherche-entreprises.api.gouv.fr` et fonctionne avec un nom ou un SIREN.
+
+**Si plusieurs résultats** : afficher la liste avec SIREN, ville et date de création, puis demander à l'utilisateur de confirmer laquelle est la bonne.
+
+**Si un seul résultat** : afficher les informations trouvées (raison sociale, forme juridique, adresse, code NAF, date de création) et demander confirmation.
+
+**Si aucun résultat ou échec** : demander manuellement :
 - Raison sociale
+- SIREN
 - Forme juridique (SASU, EURL, SAS, SARL, EI)
 - Adresse du siège
 - Code NAF
