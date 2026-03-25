@@ -2,60 +2,48 @@
 
 Ce setup se lance uniquement si `company.json` n'existe pas à la racine du projet. Il crée le fichier étape par étape.
 
-**Ne pas sauter d'étapes. Poser une question à la fois.**
+**Principe : inférer un maximum, demander un minimum.** L'API SIRENE donne presque tout. Ne poser que les questions dont la réponse n'est pas déductible.
 
-## Étape 1 : Informations de la société
+## Étape 1 : Identifier la société
 
 Demander :
 
 > Quel est le **nom de votre société** ?
 
-Quelle que soit la réponse (nom seul, SIREN, ou les deux), lancer :
+Lancer la recherche :
 
 ```bash
 python scripts/fetch_company.py "<nom ou SIREN>" --json
 ```
 
-Le script interroge l'API `recherche-entreprises.api.gouv.fr` et fonctionne avec un nom ou un SIREN.
+**Si plusieurs résultats** : afficher la liste (nom, SIREN, ville, date de création) et demander laquelle est la bonne.
 
-**Si plusieurs résultats** : afficher la liste avec SIREN, ville et date de création, puis demander à l'utilisateur de confirmer laquelle est la bonne.
+**Si un seul résultat** : afficher les informations et demander confirmation.
 
-**Si un seul résultat** : afficher les informations trouvées (raison sociale, forme juridique, adresse, code NAF, date de création) et demander confirmation.
+**Si aucun résultat** : demander manuellement (raison sociale, SIREN, forme juridique, adresse, code NAF).
 
-**Si aucun résultat ou échec** : demander manuellement :
-- Raison sociale
-- SIREN
-- Forme juridique (SASU, EURL, SAS, SARL, EI)
-- Adresse du siège
-- Code NAF
+### Données pré-remplies automatiquement depuis l'API
 
-## Étape 2 : Régime fiscal
+Après confirmation, les champs suivants sont remplis sans rien demander :
 
-Demander :
+- **Raison sociale, SIREN, SIRET, adresse, code NAF** : directement depuis l'API
+- **Dirigeant** : l'API renvoie les dirigeants, utiliser le premier. Titre déduit de la forme juridique (Président pour SAS/SASU, Gérant pour SARL/EURL)
+- **Régime d'imposition** : IS par défaut pour SAS, SASU, SARL, SA. IR par défaut pour EI, EIRL, auto-entrepreneur. Mentionner le défaut choisi, l'utilisateur corrigera si besoin.
+- **Premier exercice** : si `date_creation` < 2 ans, c'est probablement le premier exercice. Le mentionner.
+- **Dates d'exercice** : premier exercice = date de création → 31/12 de l'année suivante (ou de l'année en cours si créé en janvier). Exercices suivants = 01/01 → 31/12. Proposer ces dates par défaut, l'utilisateur ajuste si besoin.
 
-> Quel est votre **régime TVA** ? (franchise en base / réel simplifié / réel normal)
-> Quel est votre **régime d'imposition** ? (IS / IR)
+## Étape 2 : Régime TVA
 
-Si l'utilisateur hésite, expliquer brièvement les différences entre les régimes.
+C'est la seule information fiscale qu'on ne peut pas déduire. Demander :
 
-## Étape 3 : Exercice comptable
+> Quel est votre **régime TVA** ?
 
-Demander :
+Proposer les options :
+- Franchise en base (pas de TVA facturée)
+- Réel simplifié (déclaration annuelle CA12)
+- Réel normal (déclaration mensuelle CA3)
 
-> Quelles sont les **dates de votre exercice comptable** ? (début et fin)
-> Est-ce votre **premier exercice** ?
-
-## Étape 4 : Dirigeant
-
-Demander :
-
-> Quel est le **nom du dirigeant** ? (prénom, nom, civilité)
-
-Le titre est déduit automatiquement de la forme juridique : "Président" pour SAS/SASU, "Gérant" pour SARL/EURL.
-
-## Étape 5 : Banque
-
-Demander :
+## Étape 3 : Banque
 
 > Utilisez-vous **Qonto** comme banque professionnelle ?
 
@@ -69,9 +57,7 @@ Demander :
 
 **Si non** : demander le nom de la banque principale (pour le libellé du compte 512).
 
-## Étape 6 : Paiements en ligne
-
-Demander :
+## Étape 4 : Paiements en ligne
 
 > Utilisez-vous **Stripe** pour encaisser des paiements ?
 
@@ -89,19 +75,24 @@ Configurer une entrée par compte dans `stripe_accounts` avec `id`, `name`, `env
 
 **Si non** : laisser `stripe_accounts` vide (`[]`).
 
-## Étape 7 : Générer company.json
+## Étape 5 : Récapitulatif et génération
 
-Avec toutes les informations collectées, générer le fichier `company.json` à la racine du projet. Afficher un récapitulatif :
+Afficher un récapitulatif complet de tout ce qui a été collecté et inféré. Marquer clairement ce qui a été déduit pour que l'utilisateur puisse corriger :
 
 ```
 Société configurée :
   Raison sociale : [nom]
   Forme juridique : [forme]
   SIREN : [siren]
+  Dirigeant : [nom] ([titre déduit])
   Régime TVA : [regime]
-  Exercice : [debut] > [fin]
+  Régime imposition : [IS/IR] (déduit de la forme juridique)
+  Exercice : [debut] > [fin] (déduit de la date de création)
+  Premier exercice : [oui/non]
   Banque : [Qonto / autre]
   Stripe : [X compte(s) configuré(s) / non]
 ```
 
-Puis passer au workflow normal (vérification des échéances).
+> **Quelque chose à corriger ?** Sinon je génère le fichier `company.json`.
+
+Générer `company.json`, puis passer au workflow normal (vérification des échéances).
