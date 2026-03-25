@@ -1,14 +1,14 @@
 /**
- * Qonto API Integration
- * Fetches bank transactions from a Qonto account for accounting reconciliation.
+ * Connecteur Qonto
+ * Récupère les transactions bancaires depuis un compte Qonto pour le rapprochement comptable.
  *
- * Required env vars:
- * - QONTO_ID (organization slug)
- * - QONTO_API_SECRET (secret key)
+ * Variables d'environnement requises :
+ * - QONTO_ID (slug de l'organisation)
+ * - QONTO_API_SECRET (clé secrète)
  *
- * These can be found in your Qonto dashboard under Settings > Integrations > API.
+ * Disponibles dans votre dashboard Qonto : Settings > Integrations > API.
  *
- * Usage:
+ * Usage :
  *   node integrations/qonto/fetch.js
  *   node integrations/qonto/fetch.js --start 2025-01-01 --end 2025-12-31
  */
@@ -24,9 +24,9 @@ async function getHeaders() {
 
   if (!id || !secret) {
     throw new Error(
-      'Missing QONTO_ID or QONTO_API_SECRET environment variables.\n' +
-      'Set them in your shell or .env file. You can find them in your Qonto dashboard:\n' +
-      'Settings > Integrations > API.'
+      'Variables QONTO_ID ou QONTO_API_SECRET manquantes.\n' +
+      'Definissez-les dans votre shell ou fichier .env.\n' +
+      'Disponibles dans votre dashboard Qonto : Settings > Integrations > API.'
     );
   }
 
@@ -37,28 +37,28 @@ async function getHeaders() {
 }
 
 /**
- * Fetch organization info and bank accounts
+ * Récupère les informations de l'organisation et la liste des comptes bancaires.
  */
 async function getOrganization() {
   const headers = await getHeaders();
   const response = await fetch(`${QONTO_API_BASE}/organization`, { headers });
 
   if (!response.ok) {
-    throw new Error(`Qonto API error: ${response.status} ${response.statusText}`);
+    throw new Error(`Erreur API Qonto : ${response.status} ${response.statusText}`);
   }
 
   return response.json();
 }
 
 /**
- * Fetch transactions for a specific bank account
- * @param {string} iban - Bank account IBAN
- * @param {object} options - Query options
- * @param {string} options.status - Transaction status filter (default: 'completed')
- * @param {string} options.updated_at_from - Start date (ISO format)
- * @param {string} options.updated_at_to - End date (ISO format)
- * @param {number} options.per_page - Results per page (max 100)
- * @param {number} options.current_page - Page number
+ * Récupère les transactions d'un compte bancaire spécifique.
+ * @param {string} iban - IBAN du compte bancaire
+ * @param {object} options - Options de requête
+ * @param {string} options.status - Filtre par statut (défaut : 'completed')
+ * @param {string} options.updated_at_from - Date de début (format ISO)
+ * @param {string} options.updated_at_to - Date de fin (format ISO)
+ * @param {number} options.per_page - Résultats par page (max 100)
+ * @param {number} options.current_page - Numéro de page
  */
 async function getTransactions(iban, options = {}) {
   const headers = await getHeaders();
@@ -81,17 +81,17 @@ async function getTransactions(iban, options = {}) {
   const response = await fetch(url, { headers });
 
   if (!response.ok) {
-    throw new Error(`Qonto API error: ${response.status} ${response.statusText}`);
+    throw new Error(`Erreur API Qonto : ${response.status} ${response.statusText}`);
   }
 
   return response.json();
 }
 
 /**
- * Fetch all transactions with automatic pagination
- * @param {string} iban - Bank account IBAN
- * @param {object} options - Query options (same as getTransactions)
- * @returns {Array} All transactions
+ * Récupère toutes les transactions avec pagination automatique.
+ * @param {string} iban - IBAN du compte bancaire
+ * @param {object} options - Options de requête (identiques à getTransactions)
+ * @returns {Array} Toutes les transactions
  */
 async function getAllTransactions(iban, options = {}) {
   const allTransactions = [];
@@ -111,7 +111,7 @@ async function getAllTransactions(iban, options = {}) {
     hasMore = currentPage < totalPages;
     currentPage++;
 
-    // Rate limiting
+    // Limitation de débit API
     if (hasMore) {
       await new Promise(resolve => setTimeout(resolve, 200));
     }
@@ -121,8 +121,8 @@ async function getAllTransactions(iban, options = {}) {
 }
 
 /**
- * Transform a Qonto transaction to the standard Paperasse format.
- * Output matches the format expected by data/transactions/*.json.
+ * Transforme une transaction Qonto au format standard Paperasse.
+ * Le champ our_category est rempli par le skill comptable lors de la catégorisation.
  */
 function transformTransaction(tx) {
   return {
@@ -135,30 +135,31 @@ function transformTransaction(tx) {
     reference: tx.reference,
     counterparty: tx.label,
     category: tx.category,
-    our_category: null, // To be filled by the comptable skill during categorization
+    our_category: null, // Rempli par le skill comptable lors de la catégorisation
     status: tx.status,
     raw: tx
   };
 }
 
 /**
- * Main function: fetch transactions for all bank accounts and save to data/transactions/
+ * Fonction principale : récupère les transactions de tous les comptes et les enregistre
+ * dans data/transactions/
  */
 async function main() {
-  // Check if Qonto is enabled in company.json
+  // Vérifier si Qonto est activé dans company.json
   const companyPath = path.join(__dirname, '../../company.json');
   if (fs.existsSync(companyPath)) {
     const company = JSON.parse(fs.readFileSync(companyPath, 'utf-8'));
     if (company.qonto && company.qonto.enabled === false) {
-      console.log('Qonto is disabled in company.json. Skipping.');
+      console.log('Qonto est desactive dans company.json. Ignoré.');
       return;
     }
   }
 
-  // Check env vars before making API calls
+  // Vérifier les variables d'environnement avant d'appeler l'API
   if (!process.env.QONTO_ID || !process.env.QONTO_API_SECRET) {
-    console.log('Qonto env vars (QONTO_ID, QONTO_API_SECRET) not set. Skipping.');
-    console.log('To configure Qonto, set these env vars and enable qonto in company.json.');
+    console.log('Variables Qonto (QONTO_ID, QONTO_API_SECRET) non definies. Ignoré.');
+    console.log('Pour configurer Qonto, definissez ces variables et activez qonto dans company.json.');
     return;
   }
 
@@ -175,29 +176,29 @@ async function main() {
     }
   }
 
-  console.log('Fetching Qonto organization info...');
+  console.log('Récupération des informations Qonto...');
   const org = await getOrganization();
 
-  console.log(`Organization: ${org.organization.slug}`);
-  console.log(`Bank accounts: ${org.organization.bank_accounts.length}`);
+  console.log(`Organisation : ${org.organization.slug}`);
+  console.log(`Comptes bancaires : ${org.organization.bank_accounts.length}`);
 
   const outputDir = path.join(__dirname, '../../data/transactions');
   fs.mkdirSync(outputDir, { recursive: true });
 
   for (const account of org.organization.bank_accounts) {
-    console.log(`\nFetching transactions for ${account.name} (${account.iban})...`);
+    console.log(`\nRécupération des transactions pour ${account.name} (${account.iban})...`);
 
     const transactions = await getAllTransactions(account.iban, options);
-    console.log(`Found ${transactions.length} transactions`);
+    console.log(`${transactions.length} transactions trouvées`);
 
     const transformed = transactions.map(transformTransaction);
 
     const outputFile = path.join(outputDir, `qonto-${account.slug}.json`);
     fs.writeFileSync(outputFile, JSON.stringify(transformed, null, 2));
-    console.log(`Saved to ${outputFile}`);
+    console.log(`Enregistré dans ${outputFile}`);
   }
 
-  console.log('\nDone!');
+  console.log('\nTerminé !');
 }
 
 module.exports = {
@@ -209,7 +210,7 @@ module.exports = {
 
 if (require.main === module) {
   main().catch(err => {
-    console.error('Error:', err.message);
+    console.error('Erreur :', err.message);
     process.exit(1);
   });
 }

@@ -1,4 +1,4 @@
-# Integrations
+# Intégrations
 
 Connecteurs pour récupérer automatiquement les transactions bancaires et les opérations de paiement.
 

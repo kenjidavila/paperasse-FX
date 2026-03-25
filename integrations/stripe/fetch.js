@@ -1,25 +1,25 @@
 /**
- * Stripe Integration
- * Fetches charges, payouts, and balance transactions from one or more Stripe accounts.
+ * Connecteur Stripe
+ * Récupère les charges, payouts et balance transactions depuis un ou plusieurs comptes Stripe.
  *
- * Supports two modes:
+ * Supporte deux modes :
  *
- * 1. Separate accounts (each with its own API key):
+ * 1. Comptes séparés (chacun avec sa propre clé API) :
  *    "stripe_accounts": [
  *      { "id": "saas", "name": "Mon SaaS", "env_key": "STRIPE_SECRET_SAAS" },
  *      { "id": "shop", "name": "Ma Boutique", "env_key": "STRIPE_SECRET_SHOP" }
  *    ]
  *
- * 2. Stripe Connect (one platform key + sub-account IDs):
+ * 2. Stripe Connect (une clé plateforme + identifiants de sous-comptes) :
  *    "stripe_accounts": [
  *      { "id": "client-a", "name": "Client A", "env_key": "STRIPE_PLATFORM_SECRET", "stripe_account_id": "acct_xxx" },
  *      { "id": "client-b", "name": "Client B", "env_key": "STRIPE_PLATFORM_SECRET", "stripe_account_id": "acct_yyy" }
  *    ]
  *
- * You can mix both modes. If stripe_account_id is present, the Stripe-Account
- * header is sent with every API call to act on behalf of that connected account.
+ * Les deux modes sont mixables. Si stripe_account_id est present, le header
+ * Stripe-Account est envoyé a chaque appel API pour agir au nom du sous-compte.
  *
- * Usage:
+ * Usage :
  *   node integrations/stripe/fetch.js
  *   node integrations/stripe/fetch.js --start 2025-01-01 --end 2025-12-31
  *   node integrations/stripe/fetch.js --account main
@@ -29,15 +29,15 @@ const fs = require('fs');
 const path = require('path');
 
 /**
- * Load Stripe accounts from company.json
+ * Charge la liste des comptes Stripe depuis company.json.
  */
 function loadStripeAccounts() {
   const companyPath = path.join(__dirname, '../../company.json');
 
   if (!fs.existsSync(companyPath)) {
     throw new Error(
-      'company.json not found. Copy company.example.json to company.json and fill in your info.\n' +
-      'Add your Stripe accounts in the "stripe_accounts" array.'
+      'company.json introuvable. Copiez company.example.json vers company.json et remplissez vos informations.\n' +
+      'Ajoutez vos comptes Stripe dans le tableau "stripe_accounts".'
     );
   }
 
@@ -45,8 +45,8 @@ function loadStripeAccounts() {
 
   if (!company.stripe_accounts || company.stripe_accounts.length === 0) {
     throw new Error(
-      'No Stripe accounts configured in company.json.\n' +
-      'Add your Stripe accounts:\n' +
+      'Aucun compte Stripe configuré dans company.json.\n' +
+      'Ajoutez vos comptes Stripe :\n' +
       '  "stripe_accounts": [\n' +
       '    { "id": "main", "name": "Mon SaaS", "env_key": "STRIPE_SECRET" }\n' +
       '  ]'
@@ -57,15 +57,15 @@ function loadStripeAccounts() {
 }
 
 /**
- * Initialize Stripe client for a specific account.
- * If the account has a stripe_account_id (Connect), the client is configured
- * to send the Stripe-Account header on every request.
+ * Initialise le client Stripe pour un compte donné.
+ * Si le compte a un stripe_account_id (Connect), le client est configuré
+ * pour envoyer le header Stripe-Account a chaque requête.
  */
 function getStripeClient(account) {
   const apiKey = process.env[account.env_key];
 
   if (!apiKey) {
-    console.warn(`Warning: ${account.env_key} not set, skipping "${account.name}"`);
+    console.warn(`Attention : ${account.env_key} non defini, "${account.name}" ignoré`);
     return null;
   }
 
@@ -80,8 +80,8 @@ function getStripeClient(account) {
 }
 
 /**
- * Fetch all balance transactions (most comprehensive for accounting).
- * Includes charges, fees, payouts, refunds, adjustments.
+ * Récupère toutes les balance transactions (le plus complet pour la comptabilité).
+ * Inclut les charges, frais, payouts, remboursements et ajustements.
  */
 async function getBalanceTransactions(stripe, startDate, endDate) {
   const transactions = [];
@@ -115,7 +115,7 @@ async function getBalanceTransactions(stripe, startDate, endDate) {
 }
 
 /**
- * Fetch all payouts (bank transfers from Stripe to your bank account)
+ * Récupère tous les payouts (virements de Stripe vers votre compte bancaire).
  */
 async function getPayouts(stripe, startDate, endDate) {
   const payouts = [];
@@ -149,7 +149,7 @@ async function getPayouts(stripe, startDate, endDate) {
 }
 
 /**
- * Transform a Stripe balance transaction to the standard Paperasse format.
+ * Transforme une balance transaction Stripe au format standard Paperasse.
  */
 function transformBalanceTransaction(tx, account) {
   return {
@@ -172,7 +172,7 @@ function transformBalanceTransaction(tx, account) {
 }
 
 /**
- * Map Stripe transaction type to accounting category
+ * Associe un type de transaction Stripe à une catégorie comptable.
  */
 function mapStripeType(type) {
   const mapping = {
@@ -188,13 +188,13 @@ function mapStripeType(type) {
 }
 
 /**
- * Fetch all data for a single Stripe account
+ * Récupère toutes les données d'un compte Stripe (transactions + payouts).
  */
 async function fetchAccountData(account, options = {}) {
   const stripe = getStripeClient(account);
   if (!stripe) return null;
 
-  console.log(`Fetching "${account.name}"...`);
+  console.log(`Récupération de "${account.name}"...`);
 
   const [balanceTransactions, payouts] = await Promise.all([
     getBalanceTransactions(stripe, options.startDate, options.endDate),
@@ -221,7 +221,8 @@ async function fetchAccountData(account, options = {}) {
 }
 
 /**
- * Main function: fetch all configured Stripe accounts and save to data/transactions/
+ * Fonction principale : récupère tous les comptes Stripe configurés
+ * et enregistre les transactions dans data/transactions/
  */
 async function main() {
   const args = process.argv.slice(2);
@@ -247,14 +248,14 @@ async function main() {
     : allAccounts;
 
   if (accounts.length === 0) {
-    throw new Error(`No Stripe account found with id "${options.accountId}"`);
+    throw new Error(`Aucun compte Stripe trouvé avec l'id "${options.accountId}"`);
   }
 
-  console.log('Stripe Data Fetch');
-  console.log('=================');
-  if (options.startDate) console.log(`Start date: ${options.startDate}`);
-  if (options.endDate) console.log(`End date: ${options.endDate}`);
-  console.log(`Accounts: ${accounts.map(a => a.name).join(', ')}`);
+  console.log('Récupération des données Stripe');
+  console.log('===============================');
+  if (options.startDate) console.log(`Date de début : ${options.startDate}`);
+  if (options.endDate) console.log(`Date de fin : ${options.endDate}`);
+  console.log(`Comptes : ${accounts.map(a => a.name).join(', ')}`);
   console.log('');
 
   const outputDir = path.join(__dirname, '../../data/transactions');
@@ -270,14 +271,14 @@ async function main() {
 
         const outputFile = path.join(outputDir, `stripe-${account.id}.json`);
         fs.writeFileSync(outputFile, JSON.stringify(data, null, 2));
-        console.log(`  Saved ${data.balanceTransactions.length} transactions to stripe-${account.id}.json`);
+        console.log(`  ${data.balanceTransactions.length} transactions enregistrées dans stripe-${account.id}.json`);
       }
     } catch (err) {
-      console.error(`  Error fetching "${account.name}": ${err.message}`);
+      console.error(`  Erreur pour "${account.name}" : ${err.message}`);
     }
   }
 
-  // Save combined summary
+  // Enregistrer le résumé global
   const summaryFile = path.join(outputDir, 'stripe-summary.json');
   const summary = {
     fetchedAt: new Date().toISOString(),
@@ -299,15 +300,15 @@ async function main() {
   };
 
   fs.writeFileSync(summaryFile, JSON.stringify(summary, null, 2));
-  console.log(`\nSummary saved to stripe-summary.json`);
+  console.log(`\nRésumé enregistré dans stripe-summary.json`);
 
-  console.log('\nSummary:');
+  console.log('\nRésumé :');
   console.log('--------');
   for (const a of summary.accounts) {
-    console.log(`${a.account_name}: ${a.transactionCount} transactions, ${a.totalNet.toFixed(2)} EUR net`);
+    console.log(`${a.account_name} : ${a.transactionCount} transactions, ${a.totalNet.toFixed(2)} EUR net`);
   }
 
-  console.log('\nDone!');
+  console.log('\nTerminé !');
 }
 
 module.exports = {
@@ -321,7 +322,7 @@ module.exports = {
 
 if (require.main === module) {
   main().catch(err => {
-    console.error('Error:', err.message);
+    console.error('Erreur :', err.message);
     process.exit(1);
   });
 }

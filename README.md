@@ -233,7 +233,7 @@ Ne remplace pas un notaire en exercice. Seul un officier public peut authentifie
 
 ---
 
-## Integrations (Qonto, Stripe)
+## Intégrations (Qonto, Stripe)
 
 Des connecteurs pour récupérer automatiquement les transactions bancaires et les opérations de paiement. Ils s'intègrent au workflow de clôture et au rapprochement bancaire.
 
@@ -557,14 +557,14 @@ python3 scripts/update_data.py --force   # Forcer le re-téléchargement
 
 | Composant | Description | Statut |
 |-----------|-------------|--------|
-| `comptable` | Expert-comptable + clôture complète | Done |
-| `controleur-fiscal` | Contrôle fiscal DGFIP | Done |
-| `commissaire-aux-comptes` | Commissaire aux comptes | Done |
-| `notaire` | Notaire | Done |
-| `integrations/qonto` | Connecteur Qonto (transactions bancaires) | Done |
-| `integrations/stripe` | Connecteur Stripe (charges, payouts, fees) | Done |
-| `avocat` | Avocat d'affaires | Planned |
-| `drh` | DRH / Ressources humaines | Planned |
+| `comptable` | Expert-comptable + clôture complète | Fait |
+| `controleur-fiscal` | Contrôle fiscal DGFIP | Fait |
+| `commissaire-aux-comptes` | Commissaire aux comptes | Fait |
+| `notaire` | Notaire | Fait |
+| `integrations/qonto` | Connecteur Qonto (transactions bancaires) | Fait |
+| `integrations/stripe` | Connecteur Stripe (charges, payouts, fees) | Fait |
+| `avocat` | Avocat d'affaires | Prévu |
+| `drh` | DRH / Ressources humaines | Prévu |
 
 ---
 
