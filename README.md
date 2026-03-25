@@ -24,7 +24,7 @@
 
 ## Qu'est-ce que Paperasse ?
 
-<b>Paperasse est une collection de skills pour agents IA ([Claude Code](https://claude.com/product/claude-code), [Claude Cowork](https://claude.com/product/cowork), [Codex](https://openai.com/codex/), [Cursor](https://cursor.com), [Windsurf](https://windsurf.com), [Cline](https://cline.bot), [Aider](https://aider.chat)) spécialisés dans la comptabilité, la fiscalité, le notariat et l'audit des entreprises françaises.</b>
+<b>Paperasse est une collection de skills pour agents IA ([Claude Code](https://claude.com/product/claude-code), [Claude Cowork](https://claude.com/product/cowork), [Codex](https://openai.com/codex/), [Mistral Vibe](https://vibe.mistral.ai), [Cursor](https://cursor.com), [Windsurf](https://windsurf.com), [Cline](https://cline.bot), [Aider](https://aider.chat)) spécialisés dans la comptabilité, la fiscalité, le notariat et l'audit des entreprises françaises.</b>
 
 Chaque skill transforme votre agent en copilote expert d'un métier de la paperasse : comptabilité (PCG, TVA, IS, clôture annuelle, FEC, liasse fiscale), contrôle fiscal, audit CAC, et droit notarial (immobilier, succession, donation). Il connaît les textes (CGI, BOFiP, NEP), les formulaires, les échéances, et ne se trompe pas de case dans la liasse fiscale.
 
@@ -166,6 +166,7 @@ Les skills sont du Markdown. Ils marchent partout où un agent peut lire des fic
 | **Cursor** | `~/.cursor/skills/` |
 | **Windsurf** | `~/.windsurf/skills/` |
 | **Codex** | `~/.codex/skills/` |
+| **Mistral Vibe** | `~/.vibe/skills/` |
 | **Cline** | `~/.cline/skills/` |
 | **Aider** | `~/.aider/skills/` |
 
