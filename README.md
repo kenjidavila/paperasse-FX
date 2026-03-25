@@ -204,8 +204,6 @@ Vous avez un métier de la paperasse que vous aimeriez voir automatisé ? Consul
 
 ---
 
-## Star History
-
 <a href="https://www.star-history.com/?repos=romainsimon%2Fpaperasse&type=date&legend=bottom-right">
  <picture>
    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/image?repos=romainsimon/paperasse&type=date&theme=dark&legend=top-left" />
