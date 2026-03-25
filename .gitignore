@@ -4,3 +4,5 @@
 node_modules/
 output/
 company.json
+data/transactions/
+__pycache__/

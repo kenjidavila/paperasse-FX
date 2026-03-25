@@ -1,5 +1,5 @@
 {
-  "name": "MA SOCIÉTÉ",
+  "name": "EXEMPLE DE SOCIETE A COMPLETER",
   "legal_form": "SASU",
   "capital": 1000,
   "address": "1 Rue de la Paix, 75001 Paris",
@@ -8,11 +8,11 @@
   "rcs": "RCS Paris",
   "naf": "6201Z",
   "president": {
-    "title": "Président",
+    "title": "President",
     "first_name": "Jean",
     "last_name": "DUPONT",
     "civility": "M.",
-    "_comment": "Utiliser 'Président' pour SAS/SASU, 'Gérant' pour SARL/EURL"
+    "_comment": "Utiliser 'President' pour SAS/SASU, 'Gerant' pour SARL/EURL"
   },
   "fiscal_year": {
     "start": "2025-01-01",
@@ -32,6 +32,17 @@
       "fec_account": "51211"
     }
   ],
-  "stripe_accounts": [],
+  "qonto": {
+    "enabled": false,
+    "_comment": "Mettre enabled a true si vous utilisez Qonto. Env vars: QONTO_ID, QONTO_API_SECRET"
+  },
+  "stripe_accounts": [
+    {
+      "id": "main",
+      "name": "Mon Produit SaaS",
+      "env_key": "STRIPE_SECRET",
+      "_comment": "Definir STRIPE_SECRET avec votre cle Stripe (sk_live_... ou sk_test_...). Pour Stripe Connect, ajouter: stripe_account_id: acct_xxx"
+    }
+  ],
   "city": "Paris"
 }

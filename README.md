@@ -61,12 +61,15 @@ Les skills sont du Markdown. Ils fonctionnent avec tout agent ou outil capable d
 | Projets d'actes notariés | Skill `notaire` | Compromis, SCI, PACS, donation, testament (projets de travail) |
 | Diagnostics immobiliers | Skill `notaire` | Checklist DDT complète selon ancienneté et localisation |
 | Conseil patrimonial | Skill `notaire` | Usufruit/nue-propriété, SCI familiale, transmission |
+| Collecte transactions Qonto | Connecteur `integrations/qonto` | Toutes les transactions bancaires via API |
+| Collecte transactions Stripe | Connecteur `integrations/stripe` | Charges, fees, payouts, refunds via API |
+| Rapprochement bancaire Stripe/Qonto | Skill `comptable` + connecteurs | Croisement automatique payouts Stripe / crédits Qonto |
 
 ### Ce qui reste manuel
 
 | Étape | Pourquoi |
 |-------|----------|
-| Collecte des transactions | Chaque entreprise a ses propres banques et plateformes |
+| Collecte des transactions | Automatisable avec les connecteurs Qonto et Stripe (voir ci-dessous) |
 | Signature des documents | Obligation légale (seul un humain peut signer) |
 | Dépôt sur Infogreffe / impots.gouv.fr | Authentification personnelle requise |
 | Télépaiement IS | Accès à l'espace professionnel impots.gouv.fr |
@@ -101,7 +104,7 @@ Le skill `comptable` gère toute la comptabilité courante : écritures, PCG, TV
 
 Le skill suit le workflow en 12 étapes (voir `comptable/references/cloture-workflow.md`) :
 
-1. **Collecte** : Rassembler toutes les transactions de l'exercice
+1. **Collecte** : `npm run fetch` (Qonto + Stripe) ou import manuel
 2. **Catégorisation** : Mapper chaque dépense à un compte PCG
 3. **Rapprochement bancaire** : Vérifier solde comptable = solde réel
 4. **Amortissements** : Calculer les dotations (linéaire, prorata)
@@ -230,6 +233,74 @@ Ne remplace pas un notaire en exercice. Seul un officier public peut authentifie
 
 ---
 
+## Intégrations (Qonto, Stripe)
+
+Des connecteurs pour récupérer automatiquement les transactions bancaires et les opérations de paiement. Ils s'intègrent au workflow de clôture et au rapprochement bancaire.
+
+### Qonto (banque en ligne)
+
+Récupère les transactions de tous vos comptes Qonto.
+
+```bash
+# Configuration
+export QONTO_ID="votre-organisation"       # Slug (dashboard > Settings > Integrations > API)
+export QONTO_API_SECRET="votre-secret"      # Secret key
+```
+
+Activer dans `company.json` :
+```json
+"qonto": { "enabled": true }
+```
+
+```bash
+npm run fetch:qonto
+# ou avec filtrage par date :
+node integrations/qonto/fetch.js --start 2025-01-01 --end 2025-12-31
+```
+
+### Stripe (paiements en ligne)
+
+Récupère les charges, fees, payouts et refunds de vos comptes Stripe.
+
+```bash
+# Configuration (une variable par compte Stripe)
+export STRIPE_SECRET="sk_live_..."
+```
+
+Configurer dans `company.json` :
+```json
+"stripe_accounts": [
+  { "id": "main", "name": "Mon SaaS", "env_key": "STRIPE_SECRET" }
+]
+```
+
+Si vous avez plusieurs produits avec des comptes Stripe séparés, ajoutez une entrée par compte avec un `env_key` différent.
+
+Pour **Stripe Connect** (organisation avec sous-comptes), ajoutez le `stripe_account_id` :
+```json
+"stripe_accounts": [
+  { "id": "client-a", "name": "Client A", "env_key": "STRIPE_PLATFORM_SECRET", "stripe_account_id": "acct_xxx" }
+]
+```
+
+```bash
+npm run fetch:stripe
+# ou avec filtrage :
+node integrations/stripe/fetch.js --start 2025-01-01 --end 2025-12-31 --account main
+```
+
+### Tout récupérer
+
+```bash
+npm run fetch    # Qonto + Stripe
+```
+
+Les transactions sont enregistrées dans `data/transactions/` au format JSON standard.
+
+Les clés API ne sont jamais stockées dans le repo. Elles sont lues depuis les variables d'environnement. Le fichier `.env` est dans le `.gitignore`.
+
+---
+
 ## Scripts
 
 Des scripts Node.js pour automatiser la génération des documents comptables.
@@ -246,6 +317,9 @@ npm install
 ```bash
 # Prérequis : company.json rempli + data/journal-entries.json
 cp company.example.json company.json  # Puis remplir vos infos
+
+# Récupérer les transactions (si Qonto/Stripe configurés)
+npm run fetch
 
 # Générer les états financiers (Bilan, Compte de résultat, Balance)
 node scripts/generate-statements.js
@@ -481,14 +555,16 @@ python3 scripts/update_data.py --force   # Forcer le re-téléchargement
 
 ## Roadmap
 
-| Skill | Description | Statut |
-|-------|-------------|--------|
-| `comptable` | Expert-comptable + clôture complète | Done |
-| `controleur-fiscal` | Contrôle fiscal DGFIP | Done |
-| `commissaire-aux-comptes` | Commissaire aux comptes | Done |
-| `avocat` | Avocat d'affaires | Bientôt |
-| `drh` | DRH / Ressources humaines | Bientôt |
-| `notaire` | Notaire | Done |
+| Composant | Description | Statut |
+|-----------|-------------|--------|
+| `comptable` | Expert-comptable + clôture complète | Fait |
+| `controleur-fiscal` | Contrôle fiscal DGFIP | Fait |
+| `commissaire-aux-comptes` | Commissaire aux comptes | Fait |
+| `notaire` | Notaire | Fait |
+| `integrations/qonto` | Connecteur Qonto (transactions bancaires) | Fait |
+| `integrations/stripe` | Connecteur Stripe (charges, payouts, fees) | Fait |
+| `avocat` | Avocat d'affaires | Prévu |
+| `drh` | DRH / Ressources humaines | Prévu |
 
 ---
 
