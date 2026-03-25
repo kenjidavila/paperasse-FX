@@ -34,15 +34,13 @@ Les skills sont du Markdown. Ils fonctionnent avec tout agent ou outil capable d
 
 ## Quick Start
 
-### Via [agentskill.sh](https://agentskill.sh/skillsets/paperasse) (recommandé)
-
-Copiez ce message et envoyez-le à votre agent IA :
+### Copiez ce message et envoyez-le à votre agent IA :
 
 ```
-/learn skillset:paperasse
+Suis les instructions pour installer le skillset Paperasse depuis https://agentskill.sh/skillsets/paperasse
 ```
 
-Les 4 skills (comptable, notaire, controleur-fiscal, commissaire-aux-comptes) seront installés et mis à jour automatiquement.
+Les 4 skills (comptable, notaire, controleur-fiscal, commissaire-aux-comptes) seront installés automatiquement.
 
 ### Installation complète (avec scripts et connecteurs)
 
