@@ -43,11 +43,24 @@ Phase 4 : Déclarations et dépôt
 
 | Source | Méthode | Format |
 |--------|---------|--------|
-| Banque principale | API ou export CSV/OFX | Transactions avec date, montant, libellé |
-| Banque secondaire | Export CSV/PDF | Idem |
-| Stripe / PayPal / Mollie | API ou export | Charges, payouts, fees, refunds |
+| Qonto | `npm run fetch:qonto` (connecteur intégré) | JSON dans `data/transactions/qonto-*.json` |
+| Autre banque | Export CSV/OFX depuis l'espace en ligne | Transactions avec date, montant, libellé |
+| Stripe | `npm run fetch:stripe` (connecteur intégré) | JSON dans `data/transactions/stripe-*.json` |
+| PayPal / Mollie / autre | Export depuis la plateforme | Charges, payouts, fees, refunds |
 | Factures fournisseurs | Google Drive / email | PDF avec montant, TVA, date |
 | Factures clients | Logiciel facturation | Numéro, montant, date, client |
+
+**Connecteurs intégrés** :
+
+Si vous utilisez Qonto et/ou Stripe, les connecteurs dans `integrations/` permettent de récupérer les transactions automatiquement. Voir la configuration dans `company.json` et le README dans `integrations/`.
+
+```bash
+# Récupérer toutes les transactions de l'exercice
+npm run fetch
+# ou séparément avec filtrage par date :
+node integrations/qonto/fetch.js --start 2025-01-01 --end 2025-12-31
+node integrations/stripe/fetch.js --start 2025-01-01 --end 2025-12-31
+```
 
 **Format de sortie** : Un fichier JSON par source dans `data/transactions/`.
 
@@ -93,6 +106,18 @@ Solde bancaire (relevé au 31/12)
 - Opérations débitées non comptabilisées
 = Solde comptable (compte 512)
 ```
+
+**Avec les connecteurs Qonto + Stripe** :
+
+Le rapprochement peut être largement automatisé en croisant les données des deux sources :
+
+1. **Payouts Stripe vers Qonto** : Chaque payout Stripe (virement vers la banque) apparait comme un crédit sur le compte Qonto. Vérifier que chaque `payout` dans `stripe-*.json` a un crédit correspondant dans `qonto-*.json` (montant identique, date +2 à +7 jours).
+
+2. **Transactions Qonto sans Stripe** : Ce sont les dépenses directes (fournisseurs, charges, virements) qui constituent les charges et immobilisations de l'exercice.
+
+3. **Stripe fees** : Les frais Stripe ne transitent pas par Qonto (ils sont retenus sur les charges). Ils apparaissent dans les balance transactions Stripe avec `type: "stripe_fee"` et doivent être comptabilisés en charges (627/6278).
+
+4. **Solde final** : Le solde Qonto au 31/12 doit correspondre au solde du compte 512 dans le journal des écritures.
 
 **Contrôle** : L'écart doit être nul. Si écart, identifier et régulariser.
 

@@ -6,6 +6,7 @@ includes:
   - data/**
   - scripts/**
   - templates/**
+  - integrations/**
   - company.json
 description: |
   Expert-comptable IA pour les entreprises françaises. Co-pilote comptable et fiscal compliance-first.
@@ -45,6 +46,17 @@ Co-pilote comptable et fiscal pour entreprises françaises. Compliance-first.
 - Date de clôture de l'exercice
 
 Si un fichier `company.json` existe à la racine du projet, le lire pour obtenir ces informations automatiquement. Sinon, les demander à l'utilisateur.
+
+**Lors de la configuration initiale (création de `company.json`)**, demander aussi :
+
+> Utilisez-vous **Stripe** pour encaisser des paiements ?
+> Utilisez-vous **Qonto** comme banque professionnelle ?
+
+Si oui pour Stripe : configurer la section `stripe_accounts` dans `company.json` avec le nom de chaque produit/compte Stripe et le nom de la variable d'environnement contenant la clé API. Demander à l'utilisateur de définir les env vars correspondantes (`export STRIPE_SECRET="sk_live_..."`).
+
+Si oui pour Qonto : mettre `qonto.enabled` à `true` dans `company.json`. Demander à l'utilisateur de définir `QONTO_ID` et `QONTO_API_SECRET` (disponibles dans le dashboard Qonto sous Settings > Integrations > API).
+
+Ces connecteurs permettent de récupérer automatiquement les transactions pour la catégorisation et le rapprochement bancaire.
 
 ## Fraîcheur des Données
 
@@ -204,6 +216,62 @@ Consulter selon le besoin :
 | [references/regional.md](references/regional.md) | DOM-TOM, Alsace-Moselle, Corse |
 
 > **Note** : Pour le détail complet des 800+ comptes PCG, utiliser `data/pcg_YYYY.json` plutôt que `references/pcg.md` qui ne contient qu'un résumé structuré.
+
+## Intégrations (collecte automatique des transactions)
+
+Des connecteurs sont disponibles dans `integrations/` pour récupérer automatiquement les transactions bancaires et les opérations de paiement. Ils remplacent l'import manuel de fichiers CSV/OFX.
+
+### Qonto (banque en ligne)
+
+Si `qonto.enabled` est `true` dans `company.json` :
+
+```bash
+npm run fetch:qonto
+# ou avec filtrage par date :
+node integrations/qonto/fetch.js --start 2025-01-01 --end 2025-12-31
+```
+
+Récupère toutes les transactions de tous les comptes bancaires Qonto et les enregistre dans `data/transactions/qonto-*.json`.
+
+**Variables d'environnement requises** : `QONTO_ID`, `QONTO_API_SECRET` (dashboard Qonto > Settings > Integrations > API).
+
+### Stripe (paiements en ligne)
+
+Si des comptes sont configurés dans `stripe_accounts` de `company.json` :
+
+```bash
+npm run fetch:stripe
+# ou avec filtrage :
+node integrations/stripe/fetch.js --start 2025-01-01 --end 2025-12-31 --account main
+```
+
+Récupère les balance transactions (charges, fees, payouts, refunds) et les payouts pour chaque compte Stripe configuré. Enregistre dans `data/transactions/stripe-*.json`.
+
+**Configuration dans `company.json`** :
+```json
+"stripe_accounts": [
+  { "id": "main", "name": "Mon SaaS", "env_key": "STRIPE_SECRET" }
+]
+```
+
+**Variable d'environnement** : la valeur de `env_key` doit contenir la clé secrète Stripe (`sk_live_...` ou `sk_test_...`).
+
+### Récupérer toutes les sources
+
+```bash
+npm run fetch          # Qonto + Stripe
+```
+
+Les transactions récupérées sont au format standard Paperasse dans `data/transactions/`. Le champ `our_category` est à `null` et sera rempli lors de la catégorisation (mappage vers compte PCG).
+
+### Rapprochement bancaire automatisé
+
+Avec les connecteurs Qonto + Stripe, le rapprochement bancaire de l'étape 3 du workflow de clôture peut être largement automatisé :
+
+1. **Récupérer les transactions** : `npm run fetch`
+2. **Croiser les payouts Stripe avec les crédits Qonto** : chaque payout Stripe (virement vers votre banque) doit correspondre à un crédit sur le compte Qonto, avec le même montant et une date proche (J+2 à J+7)
+3. **Identifier les écarts** : transactions Qonto sans correspondance Stripe = dépenses directes ou virements manuels. Payouts Stripe sans crédit Qonto = payout en transit ou erreur.
+4. **Valider le solde** : solde Qonto au 31/12 = solde du compte 512 dans le journal
 
 ## Scripts
 
