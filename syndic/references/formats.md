@@ -144,3 +144,75 @@ Quorum/seuil : {{seuil}} voix
 Résultat : ✅ ADOPTÉE / ❌ REJETÉE
 Passerelle art. 25-1 : applicable / non applicable
 ```
+
+## Suivi LRAR Centralisé
+
+Tableau de suivi de tous les recommandés envoyés. Essentiel pour le respect des délais légaux.
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📮 SUIVI LRAR — {{copro.name}}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌────┬────────────┬──────────────────┬──────────────────────┬───────────────┬────────────┬──────────────────────────┐
+│ #  │ Date envoi │ Destinataire     │ Objet                │ N° suivi      │ Date AR    │ Délai qui court          │
+├────┼────────────┼──────────────────┼──────────────────────┼───────────────┼────────────┼──────────────────────────┤
+│  1 │ YYYY-MM-DD │ {{destinataire}} │ {{objet}}            │ {{n_suivi}}   │ YYYY-MM-DD │ {{delai}} jours (art. X) │
+└────┴────────────┴──────────────────┴──────────────────────┴───────────────┴────────────┴──────────────────────────┘
+
+Délais courants :
+- Convocation AG : 21 jours à compter du lendemain de la 1ère présentation (art. 9-1)
+- Notification PV : contestation 2 mois à compter de la réception (art. 42)
+- Mise en demeure : 30 jours pour régulariser
+- Transmission archives : 3 mois à compter de la cessation (art. 18-2)
+```
+
+## Évolution des Charges Pluriannuelle
+
+Suivi des charges sur N années pour détecter les dérives.
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📈 ÉVOLUTION DES CHARGES — {{copro.name}}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌──────────────────────┬──────────┬──────────┬──────────┬──────────┬──────────┐
+│ Poste                │ N-3      │ N-2      │ N-1      │ N        │ Tendance │
+├──────────────────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+│ Nettoyage            │ X XXX €  │ X XXX €  │ X XXX €  │ X XXX €  │ +X%/an   │
+│ Chauffage            │ X XXX €  │ X XXX €  │ X XXX €  │ X XXX €  │ variable │
+│ Assurance            │ X XXX €  │ X XXX €  │ X XXX €  │ X XXX €  │ +X%/an   │
+│ Eau                  │ X XXX €  │ X XXX €  │ X XXX €  │ X XXX €  │ +X%/an   │
+│ Électricité          │ X XXX €  │ X XXX €  │ X XXX €  │ X XXX €  │ stable   │
+│ ...                  │          │          │          │          │          │
+├──────────────────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+│ TOTAL                │XX XXX €  │XX XXX €  │XX XXX €  │XX XXX €  │ +X%/an   │
+│ Charge moy./lot      │ X XXX €  │ X XXX €  │ X XXX €  │ X XXX €  │          │
+└──────────────────────┴──────────┴──────────┴──────────┴──────────┴──────────┘
+
+⚠️ ALERTES
+- {{poste}} : +XX% sur 3 ans (à mettre en concurrence)
+- {{poste}} : très variable (écart min/max > 100%)
+```
+
+Source : factures fournisseurs, annexe 3 (budget vs réalisé), PV d'AG.
+
+## Audit Fournisseurs
+
+Tableau de synthèse pour l'audit annuel des fournisseurs.
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔍 AUDIT FOURNISSEURS — {{copro.name}} — {{date}}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌────┬──────────────┬─────────────────┬──────────┬─────────┬──────────────┬──────────────────────────┐
+│ #  │ Fournisseur  │ Prestation      │ Coût/an  │ % budg. │ Concurrence? │ Piste d'optimisation     │
+├────┼──────────────┼─────────────────┼──────────┼─────────┼──────────────┼──────────────────────────┤
+│  1 │ {{nom}}      │ {{prestation}}  │ X XXX €  │   XX%   │ Oui/Non      │ {{piste}}                │
+└────┴──────────────┴─────────────────┴──────────┴─────────┴──────────────┴──────────────────────────┘
+
+Règle : tout fournisseur > 5% du budget et non mis en concurrence depuis 3 ans = alerte.
+
+Économies identifiées : {{total}} EUR/an
+```

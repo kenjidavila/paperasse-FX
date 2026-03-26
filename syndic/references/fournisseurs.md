@@ -111,3 +111,35 @@ Le courrier de résiliation doit contenir :
 - Vérifier les assurances RC et décennale des prestataires (travaux)
 - Contrôler les certifications obligatoires (ex: Qualibat pour travaux)
 - Archiver tous les devis, même non retenus (justificatif de mise en concurrence)
+
+## Audit Annuel des Fournisseurs
+
+Chaque année (idéalement avant la préparation du budget prévisionnel), passer en revue chaque fournisseur.
+
+### Questions par poste
+
+Pour chaque fournisseur :
+1. **Coût/an** : combien a-t-on payé sur le dernier exercice ?
+2. **% du budget** : quel poids dans le budget total ?
+3. **Évolution** : le tarif a-t-il augmenté ? De combien sur 3 ans ?
+4. **Concurrence** : quand a-t-on demandé des devis concurrents pour la dernière fois ?
+5. **Périmètre** : est-ce qu'on paie pour ce qu'on utilise réellement ?
+6. **Qualité** : des plaintes ? des retards ? des interventions ratées ?
+
+### Règle de mise en concurrence
+
+**Tout fournisseur représentant > 5% du budget et non mis en concurrence depuis 3 ans doit faire l'objet de devis comparatifs.** Ce n'est pas une obligation légale mais une bonne pratique de gestion qui protège le syndic.
+
+### Format de sortie
+
+Voir le format "Audit Fournisseurs" dans [references/formats.md](formats.md).
+
+### Postes à surveiller en priorité
+
+Les 4 premiers postes représentent généralement 40 à 65% du budget :
+1. Chauffage (très variable, dépend du prix de l'énergie)
+2. Nettoyage (stable mais rarement mis en concurrence)
+3. Assurance (augmentations fréquentes de 5 à 10%/an)
+4. Honoraires syndic (disparaît en bénévole)
+
+Le reste (eau, électricité, espaces verts, contrats maintenance) mérite une revue mais les leviers sont plus limités.

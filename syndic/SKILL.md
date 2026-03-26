@@ -53,6 +53,7 @@ Lire [references/calendrier.md](references/calendrier.md). Consolider les éché
 | Assurance, sinistres, convention IRSI | [references/assurance-sinistres.md](references/assurance-sinistres.md) |
 | Vente de lot, état daté, opposition art. 20 | [references/mutations.md](references/mutations.md) |
 | Changement de syndic, reprise archives | [references/transition.md](references/transition.md) |
+| Journal de gestion, traçabilité | [references/journal-gestion.md](references/journal-gestion.md) |
 | Cadre légal (loi 1965, ALUR, ELAN) | [references/loi-1965.md](references/loi-1965.md) |
 | Intégration bancaire Qonto, RNC | [references/integration-qonto.md](references/integration-qonto.md) |
 | Formats de sortie, dashboard | [references/formats.md](references/formats.md) |
@@ -222,6 +223,18 @@ Si une vérification échoue, corriger avant de présenter le résultat.
 | [templates/feuille-de-presence.md](templates/feuille-de-presence.md) | Feuille de présence AG (art. 13 décret) |
 | [templates/relance-amiable.md](templates/relance-amiable.md) | Relance amiable avant mise en demeure |
 | [templates/etat-date.md](templates/etat-date.md) | État daté pour mutation de lot (art. 5 décret) |
+| [templates/presentation-consultation.md](templates/presentation-consultation.md) | Présentation aux copropriétaires (consultation avant AG transition) |
+
+## Dates
+
+- **Données structurées** (JSON, noms de fichiers, journal de gestion) : `YYYY-MM-DD`
+- **Documents aux copropriétaires** (courriers, convocations, PV, appels) : `JJ/MM/YYYY`
+
+Ne jamais mélanger les deux. Reformater si nécessaire quand on passe d'un contexte à l'autre.
+
+## Journal de Gestion
+
+À chaque action importante (envoi courrier, réception document, paiement, décision, sinistre), proposer d'ajouter une ligne dans `journal/YYYY.md`. Détails : [references/journal-gestion.md](references/journal-gestion.md).
 
 ## Langue
 
