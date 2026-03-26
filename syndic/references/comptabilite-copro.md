@@ -101,6 +101,15 @@ Débit  401 - Fournisseurs                               X
 Crédit 501 - Banque                                         X
 ```
 
+### Appel pour travaux votés
+
+```
+Débit  412 - Copropriétaires (provisions sur travaux)   X
+Crédit 702 - Provisions sur travaux et opérations except.    X
+```
+
+Ventilation par copropriétaire selon les tantièmes et l'échéancier voté en AG.
+
 ### Cotisation fonds de travaux
 
 ```
