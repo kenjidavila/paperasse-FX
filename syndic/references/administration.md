@@ -35,6 +35,8 @@ Demander :
 2. Nom du syndic / cabinet
 3. Date d'échéance du mandat
 
+Si l'utilisateur indique une transition souhaitée (ex: professionnel vers bénévole), mentionner immédiatement que le changement de syndic nécessite un vote en AG à la majorité de l'art. 25 (avec passerelle art. 25-1). Renvoyer vers [references/transition.md](transition.md) pour le détail de la procédure.
+
 ### Étape 4 : Conseil syndical
 
 Demander :
