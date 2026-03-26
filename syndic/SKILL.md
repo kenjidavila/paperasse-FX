@@ -245,13 +245,22 @@ Déterminer le domaine et le workflow applicable :
 
 **Données ouvertes (RNC) :**
 
-Le Registre National d'Immatriculation des Copropriétés est disponible en open data sur data.gouv.fr :
-- **Dataset** : https://www.data.gouv.fr/datasets/registre-national-dimmatriculation-des-coproprietes
-- **Format** : CSV (~437 Mo), mis à jour trimestriellement par l'ANAH
-- **Contenu** : nom, adresse, date de création, nombre de lots, nature des lots, syndic, références cadastrales, zone QPV
-- **Explorateur** : https://explore.data.gouv.fr/fr/resources/3ea8e2c3-0038-464a-b17e-cd5c91f65ce2
+Le Registre National d'Immatriculation des Copropriétés est disponible via deux canaux :
 
-Pas d'API de recherche en temps réel. Pour la déclaration/mise à jour, utiliser le portail https://www.registre-coproprietes.gouv.fr (authentification requise).
+1. **API publique (détail uniquement)** : `https://www.registre-coproprietes.gouv.fr/api/public/annuaire/coproannuairedetail/{id}`
+   - Pas d'authentification requise
+   - Retourne : identification, adresse, parcelle cadastrale, syndic, mandat, DPE, chauffage, nombre de lots, procédures, données financières
+   - Pas d'endpoint de recherche publique (l'annuaire web est une SPA Angular, pas une API REST)
+   - L'ID numérique interne est nécessaire (pas le numéro d'immatriculation)
+
+2. **Bulk CSV sur data.gouv.fr** : https://www.data.gouv.fr/datasets/registre-national-dimmatriculation-des-coproprietes
+   - ~437 Mo, ~620 000 copropriétés
+   - Mis à jour trimestriellement par l'ANAH
+   - Contenu : nom, adresse, date de création, nombre de lots, syndic, références cadastrales, zone QPV
+   - Licence Etalab (open data)
+   - Explorateur : https://explore.data.gouv.fr/fr/resources/3ea8e2c3-0038-464a-b17e-cd5c91f65ce2
+
+Pour la déclaration/mise à jour, utiliser le portail https://www.registre-coproprietes.gouv.fr (authentification requise, mise à jour dans les 2 mois suivant l'AG).
 
 ## Intégration Qonto
 
