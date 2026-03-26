@@ -21,74 +21,167 @@ Syndic sortant : {{nom_cabinet}} (fin mandat : {{date_fin}})
 Candidat bénévole : {{nom_candidat}} (lot {{n}})
 AG prévue : {{date_ag}}
 
-PHASE 1 — AUDIT ET PRÉPARATION (6 mois avant l'AG)
-- [ ] Récupérer et lire le contrat de syndic en cours
-- [ ] Noter la date de fin de mandat et le préavis de non-renouvellement
-- [ ] Demander les comptes au syndic actuel (trésorerie, impayés, contrats)
-- [ ] Inventorier les contrats fournisseurs en cours (échéances, coûts)
-- [ ] Évaluer la situation financière (impayés, fonds travaux, dettes)
-- [ ] Identifier les contentieux ou sinistres en cours
-- [ ] Informer le conseil syndical du projet de changement
+══════════════════════════════════════════════════════════════
+PHASE 1 — ÉTAT DES LIEUX (6 mois avant l'AG)
+══════════════════════════════════════════════════════════════
 
+⚠️ Le syndic sortant n'est PAS obligé de tout transmettre avant le vote.
+   Seuls les documents accessibles aux copropriétaires sont disponibles.
+
+Sources accessibles AVANT le vote :
+- Extranet copropriétaires (obligatoire ALUR) : PV des 3 dernières AG,
+  règlement, carnet d'entretien, budget, comptes, fiche synthétique
+- Annexes comptables présentées à la dernière AG (5 annexes)
+- Contrats affichés ou communiqués (assurance, maintenance)
+
+Ce qui ne sera accessible qu'APRÈS le vote (phase 5, art. 18-2) :
+- Grand livre, journal, balance complète
+- Liste complète des copropriétaires avec coordonnées
+- Détail des contrats (conditions, préavis)
+- Clés, codes, accès plateformes
+- Dossiers contentieux
+
+- [ ] Récupérer le contrat de syndic en cours (disponible sur extranet ou demande)
+- [ ] Noter : date fin mandat, préavis de non-renouvellement, pénalités éventuelles
+- [ ] Consulter les comptes sur l'extranet (dernière AG) : budget, charges, impayés
+- [ ] Lire les PV des 3 dernières AG (résolutions, travaux votés, contentieux mentionnés)
+- [ ] Identifier les contrats fournisseurs visibles (assurance, nettoyage, chauffage)
+- [ ] Vérifier la fiche synthétique (art. 8-2) : état financier global, impayés, fonds travaux
+- [ ] Informer le conseil syndical du projet
+
+══════════════════════════════════════════════════════════════
 PHASE 2 — CONSULTATION DES COPROPRIÉTAIRES (3-4 mois avant l'AG)
+══════════════════════════════════════════════════════════════
+
 - [ ] Présenter le projet aux copropriétaires (courrier ou réunion informelle)
-- [ ] Expliquer les avantages : économie honoraires, transparence, réactivité
+- [ ] Expliquer les avantages : économie honoraires ({{montant}}/an), transparence, réactivité
 - [ ] Présenter le candidat bénévole (lot, disponibilité, compétences)
 - [ ] Recueillir les questions et inquiétudes
-- [ ] Préparer les réponses aux objections courantes
-- [ ] Estimer le soutien (majorité art. 25 atteignable ?)
+- [ ] Préparer les réponses aux objections courantes :
+      • "Qui va gérer la comptabilité ?" → outils numériques + skill Paperasse
+      • "Et si le bénévole déménage ?" → nouveau vote en AG, retour pro possible
+      • "Quelle responsabilité ?" → assurance RC syndic bénévole
+      • "Et les contrats en cours ?" → continuent, juste changement d'interlocuteur
+- [ ] Compter les voix probables (majorité art. 25 = {{seuil}} tantièmes nécessaires)
 
+══════════════════════════════════════════════════════════════
 PHASE 3 — PRÉPARATION JURIDIQUE (2-3 mois avant l'AG)
+══════════════════════════════════════════════════════════════
+
 - [ ] Confirmer que le candidat est bien copropriétaire (art. 17-1)
-- [ ] Candidat : souscrire assurance RC syndic bénévole
+- [ ] Candidat : souscrire assurance RC syndic bénévole (devis + souscription)
 - [ ] Rédiger le contrat de syndic bénévole (conforme décret 26 mars 2015)
-- [ ] Préparer le budget de transition (frais compte, assurance, outils)
-- [ ] Utiliser le template : templates/contrat-syndic.md
+      → Template : templates/contrat-syndic.md
+- [ ] Préparer le budget de transition (frais compte bancaire, assurance RC, outils)
+- [ ] Préparer la comparaison de coûts (honoraires actuels vs coûts bénévole)
 
+══════════════════════════════════════════════════════════════
 PHASE 4 — ASSEMBLÉE GÉNÉRALE
-- [ ] Inscrire résolution 1 : non-renouvellement syndic sortant (art. 25)
-- [ ] Inscrire résolution 2 : élection syndic bénévole (art. 25, passerelle 25-1)
-- [ ] Inscrire résolution 3 : approbation du contrat de syndic
-- [ ] Inscrire résolution 4 : désignation signataires du compte bancaire
-- [ ] Joindre le projet de contrat à la convocation (art. 11 décret 1967)
-- [ ] Envoyer convocations LRAR (21 jours min avant l'AG, art. 9-1)
-- [ ] Joindre : formulaire vote par correspondance + pouvoir/procuration
-- [ ] JOUR J : vote obtenu ? Noter voix pour / contre / abstention
-- [ ] Si art. 25 non atteint mais ≥ 1/3 : second vote immédiat à l'art. 24 (art. 25-1)
-- [ ] Rédiger le PV d'AG (signatures : président + secrétaire + scrutateurs)
-- [ ] Notifier le PV aux absents/opposants sous 1 mois (LRAR, art. 18 décret)
-      → Le délai de contestation de 2 mois court à compter de cette notification (art. 42)
+══════════════════════════════════════════════════════════════
 
+LRAR #1 : CONVOCATION (21 jours min avant l'AG)
+- [ ] Inscrire résolution : non-renouvellement syndic sortant (art. 25)
+- [ ] Inscrire résolution : élection syndic bénévole (art. 25, passerelle 25-1)
+- [ ] Inscrire résolution : approbation du contrat de syndic
+- [ ] Inscrire résolution : désignation signataires du compte bancaire
+- [ ] Joindre au courrier :
+      • Projet de contrat de syndic (obligatoire, art. 11 décret 1967)
+      • Formulaire de vote par correspondance (templates/vote-par-correspondance.md)
+      • Pouvoir / procuration (templates/pouvoir-procuration.md)
+      • Comptes + 5 annexes + budget prévisionnel
+      • Devis travaux (si applicable)
+- [ ] LRAR #1 envoyée le : ___/___/___
+- [ ] Date AR reçu (ou première présentation) : ___/___/___
+      → Délai 21 jours court à compter du lendemain de la première présentation
+
+JOUR DE L'AG
+- [ ] Feuille de présence signée (templates/feuille-de-presence.md)
+- [ ] Bureau élu (président ≠ syndic, secrétaire, scrutateurs)
+- [ ] Vote non-renouvellement : ___ pour / ___ contre / ___ abstention
+- [ ] Vote élection bénévole : ___ pour / ___ contre / ___ abstention
+- [ ] Si art. 25 non atteint mais ≥ 1/3 des voix : second vote immédiat (art. 25-1)
+- [ ] PV rédigé et signé (templates/pv-ag.md)
+
+LRAR #2 : NOTIFICATION DU PV (sous 1 mois après l'AG)
+- [ ] Identifier les absents non représentés + opposants + abstentionnistes
+- [ ] LRAR #2 envoyée le : ___/___/___ (templates/notification-decision.md)
+- [ ] Date AR reçu : ___/___/___
+      → Délai de contestation : 2 mois à compter de cette date (art. 42 loi 1965)
+- [ ] Date limite de contestation : ___/___/___
+
+══════════════════════════════════════════════════════════════
 PHASE 5 — TRANSMISSION DES ARCHIVES (3 mois max, art. 18-2)
-- [ ] Notifier officiellement au syndic sortant la fin de son mandat (LRAR)
-- [ ] Réceptionner : situation de trésorerie (soldes, placements, rapprochement bancaire)
-- [ ] Réceptionner : comptabilité (grand livre, journal, balance, factures en cours)
-- [ ] Réceptionner : état des impayés par copropriétaire
-- [ ] Réceptionner : documents admin (règlement, tous les PV d'AG, carnet d'entretien, fiche synthétique)
-- [ ] Réceptionner : liste des copropriétaires (noms, lots, tantièmes, coordonnées)
-- [ ] Réceptionner : contrats en cours (assurance, maintenance, énergie) + échéanciers + préavis
-- [ ] Réceptionner : clés et codes (locaux techniques, portail, digicode, machinerie)
-- [ ] Réceptionner : accès plateformes (extranet, banque en ligne, RNC)
-- [ ] Réceptionner : dossiers contentieux et sinistres en cours
-- [ ] Réceptionner : compte bancaire (transfert fonds ou changement signataire)
-- [ ] VÉRIFIER : solde bancaire transmis = solde réel (relevé du jour)
-- [ ] Si refus ou retard de transmission :
-      → Mise en demeure LRAR
-      → Si pas de réponse sous 30 jours : saisine tribunal judiciaire (référé)
-      → Astreinte possible + responsabilité civile du syndic sortant
+══════════════════════════════════════════════════════════════
 
+⚠️ C'est MAINTENANT que le syndic sortant doit tout transmettre.
+   Délai : 3 mois à compter de la cessation de ses fonctions.
+
+LRAR #3 : NOTIFICATION AU SYNDIC SORTANT
+- [ ] LRAR #3 envoyée le : ___/___/___ (notification fin de mandat + demande transmission)
+- [ ] Date AR reçu : ___/___/___
+- [ ] Date limite transmission (3 mois) : ___/___/___
+
+RÉCEPTION DES DOCUMENTS (cocher au fur et à mesure)
+- [ ] Situation de trésorerie (soldes bancaires, placements, rapprochement)
+- [ ] Comptabilité complète (grand livre, journal, balance, factures en cours)
+- [ ] État des impayés par copropriétaire (montants, ancienneté)
+- [ ] Documents administratifs :
+      • Règlement de copropriété + état descriptif de division
+      • Tous les PV d'AG (pas seulement les 3 derniers)
+      • Carnet d'entretien
+      • Fiche synthétique
+- [ ] Liste complète des copropriétaires (noms, lots, tantièmes, coordonnées)
+- [ ] Contrats en cours :
+      • Assurance multirisques (n° contrat, échéance, franchise)
+      • Maintenance (nettoyage, chauffage, ascenseur, espaces verts)
+      • Énergie (EDF, gaz, eau)
+      • Autres (interphone, portail, désinsectisation, extincteurs)
+      • Pour chaque contrat : échéance, préavis de résiliation, clause de révision
+- [ ] Clés et codes :
+      • Clés locaux communs, machinerie, local technique
+      • Codes portail, digicode, interphone
+      • Identifiants extranet, banque en ligne, RNC
+- [ ] Dossiers contentieux et sinistres en cours
+- [ ] Compte bancaire : transfert fonds ou changement signataire
+
+VÉRIFICATION
+- [ ] Solde bancaire transmis = solde sur relevé bancaire du jour : OUI / NON
+- [ ] Liste des copropriétaires cohérente avec le règlement : OUI / NON
+- [ ] Tous les contrats reçus avec leurs conditions : OUI / NON
+- [ ] Écarts identifiés : _______________________________________________
+
+SI REFUS OU RETARD DE TRANSMISSION :
+- [ ] LRAR #4 : mise en demeure (rappel art. 18-2, délai 30 jours)
+      Envoyée le : ___/___/___
+- [ ] Si toujours pas de réponse : saisine tribunal judiciaire (référé)
+      → Astreinte possible (montant par jour de retard)
+      → Responsabilité civile du syndic sortant engagée
+
+══════════════════════════════════════════════════════════════
 PHASE 6 — MISE EN PLACE (dans le mois suivant la prise de fonction)
+══════════════════════════════════════════════════════════════
+
 - [ ] Ouvrir le compte bancaire séparé au nom du syndicat (art. 26-7 décret 1967)
 - [ ] Transférer les fonds depuis l'ancien compte
-- [ ] Informer tous les fournisseurs (nouveau contact, nouvelles coordonnées bancaires)
-- [ ] Informer les copropriétaires (coordonnées syndic, modalités de paiement)
+- [ ] Informer tous les fournisseurs :
+      • Nouveau contact syndic (nom, téléphone, email)
+      • Nouvelles coordonnées bancaires (si changement de banque)
+      • Courrier type à chaque fournisseur
+- [ ] Informer les copropriétaires :
+      • Coordonnées du nouveau syndic
+      • Nouvelles modalités de paiement des charges
+      • IBAN pour les virements
 - [ ] Mettre à jour l'immatriculation RNC (dans les 2 mois, art. 55 loi 1965)
       → https://www.registre-coproprietes.gouv.fr
-- [ ] Reprendre la comptabilité (rapprochement au jour du changement, vérifier concordance)
+- [ ] Reprendre la comptabilité :
+      • Rapprochement bancaire au jour du changement
+      • Vérifier concordance avec les documents transmis
+      • Ouvrir les comptes dans le plan comptable copro
 - [ ] Mettre en place l'extranet copropriétaires (obligation ALUR)
 - [ ] Émettre le premier appel de fonds au nom du nouveau syndic
 
 TRANSITION TERMINÉE ✓
+Date de prise de fonction effective : ___/___/___
 ```
 
 ## Processus Détaillé

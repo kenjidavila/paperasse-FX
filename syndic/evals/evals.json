@@ -130,6 +130,50 @@
         "Le skill demande ensuite sur quelle copropriété travailler",
         "Les exercices comptables différents (01/01 vs 01/07) sont correctement pris en compte"
       ]
+    },
+    {
+      "id": 7,
+      "name": "transition-workflow-realiste",
+      "prompt": "Je veux virer mon syndic professionnel (Cabinet Immogestion) pour passer en syndic bénévole. Son mandat se termine le 30 septembre. L'AG est prévue en juin. Le copropriétaire du lot 12 est candidat. Par où je commence ? Je n'ai pas accès à grand-chose pour l'instant, le syndic ne communique pas beaucoup.",
+      "expected_output": "Le skill propose le workflow réaliste de transition en 6 phases. Il commence par l'état des lieux avec les documents accessibles AVANT le vote (extranet, PV AG, fiche synthétique) et explique que la comptabilité complète ne sera disponible qu'après le vote (art. 18-2). Il détaille les LRAR à envoyer avec les délais. Il propose la phase de consultation des copropriétaires pour s'assurer d'avoir la majorité art. 25.",
+      "files": [
+        "evals/files/copro-oliviers.json"
+      ],
+      "assertions": [
+        "Le skill distingue les documents accessibles AVANT le vote (extranet, PV AG, fiche synthétique) et ceux accessibles APRÈS (comptabilité complète, art. 18-2)",
+        "Le skill ne demande PAS de récupérer la comptabilité complète avant le vote",
+        "Le skill mentionne l'extranet copropriétaires comme source d'information avant le vote (obligation ALUR)",
+        "Le skill recommande de consulter les copropriétaires AVANT l'AG pour estimer le soutien",
+        "Le skill calcule le seuil de majorité art. 25 nécessaire",
+        "La LRAR de convocation est mentionnée avec le délai de 21 jours (art. 9-1)",
+        "La LRAR de notification du PV est mentionnée avec le délai de 1 mois (art. 18 décret)",
+        "Le délai de contestation de 2 mois est mentionné (art. 42, court à compter de la notification)",
+        "La LRAR au syndic sortant pour demander la transmission est mentionnée",
+        "Le délai de 3 mois pour la transmission des archives est cité (art. 18-2)",
+        "La procédure en cas de refus (mise en demeure LRAR puis référé) est mentionnée",
+        "L'assurance RC syndic bénévole est recommandée pour le candidat"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "sinistre-degat-des-eaux",
+      "prompt": "Il y a une fuite d'eau dans l'appartement du 2e étage (lot 8) qui coule chez le voisin du dessous (lot 4). L'origine semble être une canalisation dans les parties communes entre les deux étages. Que dois-je faire en tant que syndic ?",
+      "expected_output": "Le skill applique la convention IRSI et guide le syndic à travers la procédure complète : déclaration à l'assureur dans les 5 jours, recherche de fuite, coordination entre les copropriétaires concernés et leurs assureurs respectifs. Il identifie que l'origine est en parties communes donc l'assureur du syndicat est compétent.",
+      "files": [
+        "evals/files/copro-oliviers.json"
+      ],
+      "assertions": [
+        "Le skill identifie qu'il s'agit d'un dégât des eaux (DDE)",
+        "La convention IRSI est mentionnée",
+        "Le délai de déclaration de 5 jours ouvrés est cité",
+        "Le skill identifie que l'origine est en parties communes",
+        "L'assureur du syndicat est identifié comme compétent pour la recherche de fuite (origine en parties communes)",
+        "Le skill demande au syndic de prendre des mesures conservatoires d'urgence (couper l'eau si possible)",
+        "Les deux copropriétaires concernés (lots 8 et 4) doivent déclarer à leurs propres assureurs",
+        "Le seuil de 5 000 EUR HT de la convention IRSI est mentionné",
+        "Le skill propose la checklist sinistre pour le suivi",
+        "Les dommages aux parties privatives du lot 4 sont à la charge de l'assureur de l'occupant du lot 4 (convention IRSI)"
+      ]
     }
   ]
 }
