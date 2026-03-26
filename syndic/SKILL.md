@@ -50,9 +50,11 @@ Lire [references/calendrier.md](references/calendrier.md). Consolider les éché
 | Fournisseurs, contrats, mise en concurrence | [references/fournisseurs.md](references/fournisseurs.md) |
 | Travaux, carnet d'entretien, DTG, aides | [references/travaux.md](references/travaux.md) |
 | Impayés, recouvrement, privilège immobilier | [references/contentieux.md](references/contentieux.md) |
+| Assurance, sinistres, convention IRSI | [references/assurance-sinistres.md](references/assurance-sinistres.md) |
+| Vente de lot, état daté, opposition art. 20 | [references/mutations.md](references/mutations.md) |
 | Changement de syndic, reprise archives | [references/transition.md](references/transition.md) |
 | Cadre légal (loi 1965, ALUR, ELAN) | [references/loi-1965.md](references/loi-1965.md) |
-| Intégration bancaire Qonto | [references/integration-qonto.md](references/integration-qonto.md) |
+| Intégration bancaire Qonto, RNC | [references/integration-qonto.md](references/integration-qonto.md) |
 | Formats de sortie, dashboard | [references/formats.md](references/formats.md) |
 
 ### 2. Collecter le contexte
@@ -135,6 +137,32 @@ Recouvrement — Lot {{n}} — {{montant}} EUR
 - [ ] Vérifier : privilège immobilier (exercice en cours + 2 échus)
 ```
 
+### Vente de lot (mutation)
+
+```
+Mutation — Lot {{n}} — Vendeur → Acquéreur
+- [ ] Pré-état daté transmis (gratuit, avant compromis)
+- [ ] Documents joints (fiche synthétique, PV AG, règlement)
+- [ ] État daté transmis au notaire (max 380 EUR TTC)
+- [ ] Compte vendeur vérifié (impayés → opposition art. 20 sous 15 jours)
+- [ ] Registre copropriétaires mis à jour
+- [ ] Acquéreur informé (modalités, prochain appel)
+```
+
+### Sinistre (dégât des eaux, incendie)
+
+```
+Sinistre — {{type}} — {{date}}
+- [ ] Constat (photos, description, lots touchés)
+- [ ] Mesures conservatoires d'urgence
+- [ ] Déclaration assureur syndicat (5 jours ouvrés)
+- [ ] Information copropriétaires concernés
+- [ ] Recherche de fuite (si DDE)
+- [ ] Expertise : date convenue, syndic présent
+- [ ] Devis réparation obtenus
+- [ ] Indemnisation reçue, travaux réalisés
+```
+
 ## Validation
 
 Après tout calcul (appels de fonds, régularisation, budget), vérifier :
@@ -172,6 +200,11 @@ Si une vérification échoue, corriger avant de présenter le résultat.
 | [templates/budget-previsionnel.md](templates/budget-previsionnel.md) | Budget prévisionnel annuel |
 | [templates/fiche-synthetique.md](templates/fiche-synthetique.md) | Fiche synthétique (art. 8-2) |
 | [templates/notification-decision.md](templates/notification-decision.md) | Notification décision AG |
+| [templates/vote-par-correspondance.md](templates/vote-par-correspondance.md) | Formulaire vote par correspondance (art. 17-1A) |
+| [templates/pouvoir-procuration.md](templates/pouvoir-procuration.md) | Pouvoir / procuration AG (art. 22) |
+| [templates/feuille-de-presence.md](templates/feuille-de-presence.md) | Feuille de présence AG (art. 13 décret) |
+| [templates/relance-amiable.md](templates/relance-amiable.md) | Relance amiable avant mise en demeure |
+| [templates/etat-date.md](templates/etat-date.md) | État daté pour mutation de lot (art. 5 décret) |
 
 ## Langue
 
