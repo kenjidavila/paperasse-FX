@@ -37,7 +37,7 @@ Les skills sont du Markdown. Ils fonctionnent avec tout agent ou outil capable d
 ### Option 1 : installation via agentskill.sh (recommandé)
 
 Installe les skills depuis le registre [agentskill.sh](https://agentskill.sh/skillsets/paperasse).
-Pas besoin de cloner le repo et permet d'avoir tous les skills maintenus à jour automatiquement.
+Pas besoin de cloner le repo et permet d'avoir tous les skills maintenus à jour automatiquement via [ags](https://github.com/agentskill-sh/ags) + scan de sécurité, auto-review des skills, etc.
 
 Copiez-collez ces instructions dans votre agent IA :
 
