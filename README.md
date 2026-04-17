@@ -14,7 +14,7 @@
 
 <p align="center">
   <a href="https://github.com/romainsimon/paperasse/stargazers"><img src="https://img.shields.io/github/stars/romainsimon/paperasse" alt="GitHub stars"></a>
-  <img src="https://img.shields.io/badge/evals-89%25_with_skill_%7C_78%25_without_%7C_%2B11%25_delta-brightgreen" alt="Evals: 89% with skill | 78% without | +11% delta">
+  <img src="https://img.shields.io/badge/evals-89%25_with_skill_%7C_76%25_without_%7C_%2B13%25_delta-brightgreen" alt="Evals: 89% with skill | 76% without | +13% delta">
   <a href="https://github.com/romainsimon/paperasse/blob/master/LICENSE"><img src="https://img.shields.io/github/license/romainsimon/paperasse?style=flat&color=blue" alt="License"></a>
 </p>
 
@@ -24,9 +24,9 @@
 
 ## Qu'est-ce que Paperasse ?
 
-<b>Paperasse est une collection de skills pour agents IA ([Claude Code](https://claude.com/product/claude-code), [Claude Cowork](https://claude.com/product/cowork), [Codex](https://openai.com/codex/), [Mistral Vibe](https://vibe.mistral.ai), [Cursor](https://cursor.com), [Windsurf](https://windsurf.com), [Cline](https://cline.bot), [Aider](https://aider.chat)) spécialisés dans la comptabilité, la fiscalité, le notariat et l'audit des entreprises françaises.</b>
+<b>Paperasse est une collection de skills pour agents IA ([Claude Code](https://claude.com/product/claude-code), [Claude Cowork](https://claude.com/product/cowork), [Codex](https://openai.com/codex/), [Mistral Vibe](https://vibe.mistral.ai), [Cursor](https://cursor.com), [Windsurf](https://windsurf.com), [Cline](https://cline.bot), [Aider](https://aider.chat)) spécialisés dans la comptabilité, la fiscalité, la facturation, le notariat et l'audit des entreprises françaises.</b>
 
-Chaque skill transforme votre agent en copilote expert d'un métier de la paperasse : comptabilité (PCG, TVA, IS, clôture annuelle, FEC, liasse fiscale), contrôle fiscal, audit CAC, droit notarial (immobilier, succession, donation), et gestion de copropriété (AG, charges, travaux, impayés). Il connaît les textes (CGI, BOFiP, NEP, loi 1965), les formulaires, les échéances, et ne se trompe pas de case dans la liasse fiscale.
+Chaque skill transforme votre agent en copilote expert d'un métier de la paperasse : comptabilité (PCG, TVA, IS, clôture annuelle, FEC, liasse fiscale), facturation (mentions obligatoires, facturation électronique 2026, plateformes agréées, e-reporting), contrôle fiscal, audit CAC, droit notarial (immobilier, succession, donation), et gestion de copropriété (AG, charges, travaux, impayés). Il connaît les textes (CGI, BOFiP, NEP, loi 1965), les formulaires, les échéances, et ne se trompe pas de case dans la liasse fiscale.
 
 Les skills sont du Markdown. Ils fonctionnent avec tout agent ou outil capable de lire des fichiers. Paperasse inclut aussi des connecteurs pour récupérer automatiquement vos transactions bancaires (Qonto) et paiements (Stripe).
 
@@ -63,7 +63,7 @@ L'agent va cloner le repo, installer les skills, et lancer le setup guidé qui v
 
 | Skill | Rôle | Ce qu'il fait |
 |-------|------|---------------|
-| **`comptable`** | Expert-Comptable | Écritures comptables (800+ comptes PCG), TVA, IS/IR, clôture annuelle complète en 12 étapes, FEC, liasse fiscale, PDFs, rapprochement bancaire |
+| **`comptable`** | Expert-Comptable | Écritures comptables (800+ comptes PCG), TVA, IS/IR, clôture annuelle complète en 12 étapes, FEC, liasse fiscale, PDFs, rapprochement bancaire, facturation (mentions obligatoires, facturation électronique 2026, plateformes agréées, Factur-X, e-reporting) |
 | **`controleur-fiscal`** | Contrôleur Fiscal | Simulation de contrôle DGFIP sur 8 axes, chefs de redressement avec base légale et montants |
 | **`commissaire-aux-comptes`** | Commissaire aux Comptes | Audit NEP en 7 phases, validation croisée bilan/CR/liasse, opinion motivée |
 | **`notaire`** | Notaire | Frais de notaire, plus-value immobilière, successions, donations, SCI, PACS, diagnostics, conseil patrimonial |
@@ -93,6 +93,12 @@ L'agent va cloner le repo, installer les skills, et lancer le setup guidé qui v
 > Donne-moi un tableau de bord de toutes mes copropriétés.
 
 > Le copropriétaire du lot 7 n'a pas payé depuis 6 mois. Que faire ?
+
+> Génère une facture conforme pour mon client TechSolutions SAS.
+
+> Suis-je prêt pour la facturation électronique obligatoire 2026 ?
+
+> Quelle plateforme agréée gratuite me recommandes-tu ?
 ```
 
 ---
@@ -210,9 +216,9 @@ Pour les PRs, un workflow GitHub Actions `Evals Smoke` résout les skills impact
 | commissaire-aux-comptes | 100% | 75% | **+25%** |
 | notaire | 96% | 92% | +4% |
 | controleur-fiscal | 91% | 87% | +4% |
-| comptable | 89% | 85% | +4% |
+| comptable | 89% | 77% | **+12%** |
 | syndic | 83% | 68% | **+16%** |
-| **Aggregate** | **89%** | **78%** | **+11%** |
+| **Aggregate** | **89%** | **76%** | **+13%** |
 
 Le format `evals.json` est compatible avec le [framework officiel anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/skill-creator).
 

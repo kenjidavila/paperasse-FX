@@ -90,6 +90,101 @@
         "Le seuil de franchise TVA est surveillé sur la période courte",
         "Les dépenses antérieures à la création (25/02/2025) ne sont pas incluses"
       ]
+    },
+    {
+      "id": 6,
+      "name": "facturation-diagnostic-conformite-2026",
+      "prompt": "Ma société WebCraft est une SASU en franchise en base de TVA. Suis-je concernée par la facturation électronique obligatoire en 2026 ? Que dois-je faire et quand ?",
+      "expected_output": "Le skill identifie que l'entreprise est assujettie à la TVA (même en franchise), détermine la taille (micro/PME), donne les échéances (réception sept. 2026, émission sept. 2027), recommande de choisir une PA, et mentionne les nouvelles mentions obligatoires.",
+      "files": [
+        "evals/files/company-webdev.json"
+      ],
+      "assertions": [
+        "Le skill identifie que WebCraft est assujettie à la TVA même en franchise en base",
+        "L'échéance de réception est mentionnée : 1er septembre 2026",
+        "L'échéance d'émission est mentionnée : 1er septembre 2027 (car PME/micro)",
+        "Le skill recommande de choisir une plateforme agréée (PA)",
+        "Au moins une PA gratuite est mentionnée (Qonto, Indy, Pennylane ou Dext)",
+        "Les nouvelles mentions obligatoires 2026 sont citées (SIREN client, catégorie d'opération)",
+        "L'e-reporting est mentionné comme obligation complémentaire",
+        "Le skill mentionne que le PPF ne sert plus à émettre/recevoir des factures"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "facturation-generer-facture-conforme",
+      "prompt": "Génère une facture pour mon client TechSolutions SAS (SIREN 987654321, 45 avenue de la République, 75011 Paris) pour une prestation de développement d'application web, 10 jours de travail à 500 EUR/jour. Paiement à 30 jours par virement.",
+      "expected_output": "Le skill génère une facture complète avec toutes les mentions obligatoires, incluant les nouvelles mentions 2026 (SIREN client, catégorie prestation de services), la mention franchise TVA, les pénalités de retard et l'indemnité de 40 EUR.",
+      "files": [
+        "evals/files/company-webdev.json"
+      ],
+      "assertions": [
+        "L'identité complète de WebCraft est présente (nom, SASU, adresse, SIRET)",
+        "L'identité du client est complète (TechSolutions SAS, adresse, SIREN 987654321)",
+        "Un numéro de facture est attribué (format séquentiel)",
+        "La date d'émission est présente",
+        "La désignation est précise (développement application web)",
+        "La quantité (10 jours) et le prix unitaire (500 EUR) sont indiqués",
+        "Le montant total est correct (5 000 EUR)",
+        "La mention franchise TVA est présente (art. 293 B du CGI)",
+        "La date d'échéance est calculée (30 jours après émission)",
+        "Les pénalités de retard sont mentionnées",
+        "L'indemnité forfaitaire de recouvrement de 40 EUR est mentionnée",
+        "La catégorie d'opération est indiquée (prestation de services)"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "facturation-choix-pa-auto-entrepreneur",
+      "prompt": "Je suis auto-entrepreneur en services informatiques, je facture environ 5 clients par mois, tous en France. Je n'ai pas de compte Qonto. Quelle plateforme agréée me recommandes-tu pour la facturation électronique ?",
+      "expected_output": "Le skill recommande une PA gratuite adaptée au profil (auto-entrepreneur, faible volume, B2B France), compare les options, et justifie le choix.",
+      "files": [],
+      "assertions": [
+        "Au moins deux PA gratuites sont comparées",
+        "Les critères de comparaison incluent le coût (gratuit), la facilité d'utilisation, et le public cible",
+        "La recommandation est justifiée par le profil (auto-entrepreneur, faible volume)",
+        "Le skill mentionne de vérifier que la PA est bien immatriculée sur impots.gouv.fr",
+        "L'échéance de réception (sept. 2026) est rappelée",
+        "L'e-reporting est abordé (ventes B2B → pas de reporting spécifique, géré par la facturation électronique)"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "facturation-validation-facture-incomplete",
+      "prompt": "Vérifie cette facture :\n\nFacture N° 2026-042\nDate : 15/09/2026\n\nWebCraft SASU\n12 rue du Commerce, Lyon\n\nClient : Jean Martin\n\nPrestation de conseil : 2 000 EUR\n\nÀ payer sous 30 jours.",
+      "expected_output": "Le skill identifie les mentions manquantes : SIRET émetteur, SIREN client (si B2B), mention franchise TVA, pénalités de retard, indemnité 40 EUR, catégorie d'opération (2026), quantité et prix unitaire, capital social et RCS.",
+      "files": [
+        "evals/files/company-webdev.json"
+      ],
+      "assertions": [
+        "Le SIRET de l'émetteur est identifié comme manquant",
+        "Le SIREN du client est identifié comme manquant (ou demande de clarification B2B/B2C)",
+        "La mention franchise TVA (art. 293 B) est identifiée comme manquante",
+        "Les pénalités de retard sont identifiées comme manquantes",
+        "L'indemnité forfaitaire de 40 EUR est identifiée comme manquante",
+        "La quantité et le prix unitaire détaillés sont identifiés comme manquants",
+        "La forme juridique, le capital social ou le RCS sont identifiés comme manquants",
+        "La catégorie d'opération (prestation de services) est mentionnée comme manquante pour 2026",
+        "Le skill propose une version corrigée ou une liste de corrections"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "facturation-e-reporting-saas-b2c",
+      "prompt": "Mon SaaS WebCraft vend des abonnements à des particuliers via Stripe. Je suis en franchise TVA. Quelles sont mes obligations d'e-reporting à partir de 2027 ?",
+      "expected_output": "Le skill explique les obligations d'e-reporting B2C : transmission des données de transactions (totaux par période), fréquence semestrielle pour la franchise, pas d'e-reporting de paiement car pas de TVA à l'encaissement. Mentionne que la PA gère la transmission.",
+      "files": [
+        "evals/files/company-webdev.json"
+      ],
+      "assertions": [
+        "L'e-reporting de transactions B2C est expliqué (ventes aux particuliers)",
+        "La fréquence de transmission est correcte (semestrielle pour franchise en base)",
+        "Les données à transmettre sont décrites (bases HT par taux, montants TVA cumulés)",
+        "Le skill précise que l'e-reporting de paiement ne s'applique pas en franchise TVA",
+        "Le rôle de la PA dans la transmission est mentionné",
+        "L'amende pour défaut de transmission est mentionnée (250 EUR par transmission)",
+        "L'échéance est correcte (1er septembre 2027 pour PME/micro)"
+      ]
     }
   ]
 }

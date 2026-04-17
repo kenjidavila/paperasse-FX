@@ -22,6 +22,37 @@ Noms de dossiers en français, en minuscules, avec tirets :
 - `avocat` (avocat d'affaires)
 - `drh` (DRH / ressources humaines)
 
+## Doctrine : skill = métier, pas outil
+
+Un skill représente un **métier** (ou un rôle professionnel identifiable) et doit être **self-contained** : un utilisateur qui invoque `comptable` s'attend à ce qu'il couvre tout ce que fait un comptable, sans devoir combiner plusieurs skills.
+
+**Critère de décision** pour un nouveau skill : « est-ce qu'un humain se présente avec cette casquette sur le marché du travail ? » Si oui → skill. Sinon → module partagé.
+
+Les **canaux, APIs, outils transverses** (guichet unique INPI, API Entreprise, portails URSSAF/DGFiP, etc.) ne sont pas des skills. Ce sont des briques utilisées par plusieurs métiers.
+
+### Code partagé via symlinks
+
+Pour éviter la duplication tout en gardant les skills self-contained, le code partagé vit à la racine du repo et les skills le référencent par symlink :
+
+```
+paperasse/
+├── integrations/
+│   └── guichet-unique/        # client API INPI, soumission formalités
+├── data/
+│   └── formes-juridiques.json # codes INPI partagés
+├── scripts/
+│   └── submit-depot-comptes.js
+├── comptable/
+│   ├── SKILL.md
+│   ├── integrations/guichet-unique -> ../../integrations/guichet-unique
+│   └── data/formes-juridiques.json -> ../../data/formes-juridiques.json
+└── notaire/
+    ├── SKILL.md
+    └── integrations/guichet-unique -> ../../integrations/guichet-unique
+```
+
+**Chevauchement ≠ duplication** : si `notaire` et un futur `avocat` font tous les deux des modifications statutaires, c'est fidèle à la réalité (les deux professions le font). La *logique* est partagée via les symlinks, le *framing métier* diffère dans chaque `SKILL.md` (le notaire rédige un acte authentique, l'avocat un acte SSP).
+
 ## Structure d'un skill
 
 ```
