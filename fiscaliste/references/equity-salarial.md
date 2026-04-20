@@ -2,7 +2,9 @@
 
 Voir `data/equity-salarial.json` pour les taux et seuils.
 
-## RSU (Restricted Stock Units)
+## RSU / AGA (Restricted Stock Units / Actions Gratuites)
+
+**Terminologie** : "RSU" est le terme anglo-saxon ; "AGA" (Actions Gratuites d'Actions) est le terme juridique français (art. L. 225-197-1 C. com., art. 80 quaterdecies CGI). Les deux désignent le même dispositif : attribution d'actions gratuites aux salariés, avec période d'acquisition (vesting) puis détention éventuelle.
 
 ### Deux événements fiscaux distincts
 
@@ -38,9 +40,7 @@ Seule la plus-value ultérieure (valeur vesting → cession) est PV mobilière.
 
 Un vesting massif (ex: 150 000 € en une seule année) fait franchir plusieurs tranches. Le **quotient pour revenus exceptionnels** (coefficient 4) peut lisser l'imposition.
 
-Voir `references/cas-speciaux.md` → revenus exceptionnels.
-
-**Nuance** : inutile si le foyer est déjà au TMI 45% — le taux marginal ne change pas avec la division.
+Mécanisme : impôt = [IR(RNI_hors_RSU + vesting/4) − IR(RNI_hors_RSU)] × 4. Utile si le vesting seul fait franchir une tranche. **Nuance** : inutile si le foyer est déjà au TMI 45% — le taux marginal ne change pas avec la division. Détail et exemples chiffrés dans la section cas-speciaux listée depuis SKILL.md.
 
 ## Stock-options
 

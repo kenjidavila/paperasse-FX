@@ -188,6 +188,36 @@ Délai pendant lequel la DGFIP peut redresser :
 
 **Conservation des documents** : minimum 6 ans (conseil : 10 ans pour couvrir tous les cas).
 
+## PUMA (Protection universelle maladie) — cotisation subsidiaire maladie
+
+Concerne les personnes **affiliées à l'assurance maladie française** qui tirent peu ou pas de revenus d'activité professionnelle mais disposent d'un **patrimoine générateur de revenus du capital significatifs**.
+
+### Conditions d'assujettissement cumulatives
+
+- Rattachement à un régime d'assurance maladie français
+- Revenus d'activité professionnelle **< 20 % du PASS** (≈ 9 420 € pour 2025)
+- Revenus du capital (RCM, PV, revenus fonciers) > **50 % du PASS** (≈ 23 550 € pour 2025)
+
+### Calcul
+
+Assiette = revenus du patrimoine − abattement (50 % du PASS).
+Taux : **6,5 %** appliqué à l'assiette (taux plafonné à 8 × PASS = ~376 k€ de base pour 2025).
+
+Recouvrement : URSSAF, pas DGFIP. Avis distinct de l'avis IR.
+
+### À vérifier systématiquement
+
+- Retraités avec patrimoine significatif (dividendes, loyers) → potentiellement concernés
+- Rentiers avant retraite → souvent concernés
+- Personnes en congé sabbatique avec revenus du capital → vérifier
+
+### Nuance
+
+- **Non déductible** de l'IR (contrairement à la CSG sur revenus d'activité)
+- Cumul avec les prélèvements sociaux 17,2 % sur les mêmes revenus du capital (pas de double comptage, mais additionne à la pression fiscale globale)
+
+**Piège fréquent** : oublier la PUMA dans la simulation globale d'un FIRE / rentier → sous-estimation de ~6,5 % sur les revenus du capital hors seuil.
+
 ## Régularisation spontanée
 
 **Intérêt** : réduction des pénalités si le contribuable rectifie avant contrôle.
@@ -206,4 +236,5 @@ Délai pendant lequel la DGFIP peut redresser :
 - Exit tax : art. 167 bis CGI
 - Impatriation : art. 155 B CGI
 - Droit de reprise : LPF (Livre des Procédures Fiscales)
+- PUMA / cotisation subsidiaire maladie : art. L. 380-2 CSS
 - BOFiP : BOI-INT (conventions internationales), BOI-IR-LIQ

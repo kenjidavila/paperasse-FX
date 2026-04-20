@@ -70,7 +70,7 @@ Mais si le même foyer a aussi **5 000 € de PV mobilière** sans abattement :
 
 ### Crypto-actifs
 
-Voir `references/crypto.md` — régime distinct (méthode PAMC, formulaire 2086).
+Régime distinct : méthode PAMC (prix acquisition moyen pondéré) sur l'ensemble du portefeuille, formulaire 2086, seuil d'exonération cessions < 305 €/an. Détail dans la section crypto listée depuis SKILL.md.
 
 ## Prélèvements sociaux : couche distincte de l'IR
 
@@ -95,10 +95,10 @@ Voir `references/crypto.md` — régime distinct (méthode PAMC, formulaire 2086
 
 ## Enveloppes fiscales spécifiques
 
-Voir `references/pea-assurance-vie.md` pour le détail du PEA et de l'AV (rachats).
-
 **PEA** : exonération IR après 5 ans, PS 17,2% restent dus.
 **AV** : abattement annuel après 8 ans, fiscalité selon date des versements.
+
+Règles complètes (retrait avant/après 5 ans PEA, abattements AV par tranche de versement, 152 500 € succession AV) dans la section PEA/AV listée depuis SKILL.md.
 
 ## Pièges fréquents
 

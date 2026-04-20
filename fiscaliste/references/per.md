@@ -131,9 +131,10 @@ L'abondement est un complément versé par l'entreprise pour chaque euro versé 
 
 ## Différence PER individuel vs PERCO / PERO
 
-Voir `references/equity-salarial.md` pour le détail.
+- **PER individuel** (présent doc) : versements volontaires, déductibles dans la limite du plafond, sortie imposée au barème.
+- **PERCO / PEE** (plans d'épargne entreprise) : alimenté par intéressement, participation, abondement employeur. Voir la section Equity salarial listée depuis SKILL.md pour le détail.
 
-**Règle d'or** : toujours saturer l'abondement employeur (PEE + PERCO) AVANT d'abonder un PER individuel. L'abondement est de l'argent gratuit.
+**Règle d'or** : toujours saturer l'abondement employeur (PEE + PERCO) AVANT d'abonder un PER individuel. L'abondement est de l'argent gratuit — aucun rendement PER individuel n'égale un match à 50-300%.
 
 ## Pièges fréquents
 

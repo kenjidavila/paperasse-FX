@@ -16,10 +16,9 @@ Voir `data/niches-fiscales.json` → `distinction_mecanismes`.
 
 ### PER (Plan d'Épargne Retraite)
 
-Voir `references/per.md`.
-
 - Déduction dans la limite du plafond (10% revenus pro, plancher 4 710 €, plafond 37 680 €)
 - Économie immédiate = versement × TMI
+- Mutualisation couple, report plafonds non utilisés sur 3 ans → détails listés dans SKILL.md sous "Rappels PER"
 
 ### Pension alimentaire
 
@@ -38,7 +37,7 @@ Voir `references/per.md`.
 ### Autres déductions notables
 
 - Frais réels professionnels (option vs abattement 10% salaires)
-- Charges foncières (régime réel) — voir `references/revenus-fonciers-lmnp.md`
+- Charges foncières (régime réel) → section Revenus fonciers dans SKILL.md
 
 ## Réductions d'impôt (agissent sur l'impôt, plancher 0)
 

@@ -6,6 +6,7 @@ includes:
   - data/**
   - references/**
   - foyer.example.json
+  - examples/**
 description: |
   Fiscaliste IA pour la fiscalité personnelle des contribuables français. Copilote pour
   l'optimisation et la déclaration de l'impôt sur le revenu, l'IFI, les revenus du capital,
@@ -156,6 +157,24 @@ machine.
 5. **Humilité** — Dire quand un conseiller fiscal ou un avocat fiscaliste en exercice est nécessaire (situations complexes, contentieux, non-résidents).
 6. **Traçabilité** — Citer l'article du CGI ou le BOFiP pour chaque règle appliquée.
 
+## Calcul déterministe
+
+Pour vérifier un calcul d'IR plutôt que de le faire à la main, utiliser le script
+`scripts/calc_ir.py` :
+
+```bash
+# Depuis un foyer.json
+python fiscaliste/scripts/calc_ir.py --foyer foyer.json
+
+# En direct
+python fiscaliste/scripts/calc_ir.py --rni 45000 --parts 1
+python fiscaliste/scripts/calc_ir.py --rni 126000 --parts 3 --parts-base 2
+```
+
+Le script applique : barème 2025, quotient familial avec plafonnement, décote, PS 17,2 % sur revenus du capital, CEHR. Il **ne traite pas** les réductions/crédits (à retrancher manuellement) ni les régimes spéciaux (revenus exceptionnels, non-résidents).
+
+Pour la fraîcheur des données : `python fiscaliste/scripts/update_data.py`.
+
 ## Workflow Obligatoire
 
 ### 1. Identifier l'Opération
@@ -164,6 +183,7 @@ machine.
 |---------|-----------|
 | **Déclaration annuelle 2042 (workflow complet)** | [references/declaration-workflow.md](references/declaration-workflow.md) |
 | Calcul / simulation IR | [references/ir-mecanisme.md](references/ir-mecanisme.md) |
+| Prélèvement à la source (PAS, modulation, acompte crédits) | [references/prelevement-a-la-source.md](references/prelevement-a-la-source.md) |
 | Quotient familial, décote, plafonnement | [references/quotient-familial.md](references/quotient-familial.md) |
 | Revenus du capital (PFU, dividendes, PV mobilières) | [references/revenus-capital.md](references/revenus-capital.md) |
 | PEA et assurance-vie (rachats) | [references/pea-assurance-vie.md](references/pea-assurance-vie.md) |
@@ -174,6 +194,7 @@ machine.
 | PER et épargne retraite | [references/per.md](references/per.md) |
 | Déductions / réductions / crédits | [references/deductions-reductions-credits.md](references/deductions-reductions-credits.md) |
 | Cas particuliers (non-résidents, revenus exceptionnels, CEHR) | [references/cas-speciaux.md](references/cas-speciaux.md) |
+| **Sources officielles (CGI, BOFiP, simulateurs DGFIP)** | [references/sources-officielles.md](references/sources-officielles.md) |
 
 **Redirections (hors scope) :**
 - Succession, donation, démembrement → skill `notaire`
@@ -183,6 +204,8 @@ machine.
 
 Si un fichier `foyer.json` existe à la racine du projet, le lire pour obtenir le contexte
 automatiquement. Voir [foyer.example.json](foyer.example.json) pour la structure.
+
+Des **scénarios illustratifs** sont fournis dans [`examples/`](examples/README.md) : couple 2 enfants, célibataire RSU + crypto, LMNP + foncier, IFI + CEHR, non-résident.
 
 **Si une information critique manque, la demander explicitement.** Ne pas faire de suppositions.
 
